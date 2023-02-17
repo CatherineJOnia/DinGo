@@ -6,93 +6,93 @@ const {
 
 const users = [
   {
-    email_address: "cat@dingo.com",
+    email: "cat@dingo.com",
     password: "123cat",
-    first_name: "Catherine",
-    last_name: "Onia",
-    is_admin: true,
-    address_line_1: "1456 Main Street",
+    firstName: "Catherine",
+    lastName: "Onia",
+    isAdmin: true,
+    address1: "1456 Main Street",
     city: "Atlanta",
     country: "USA",
   },
   {
-    email_address: "mae@dingo.com",
+    email: "mae@dingo.com",
     password: "123mae",
-    first_name: "Mae",
-    last_name: "May",
-    is_admin: true,
-    address_line_1: "1938 Hoover Avenue",
+    firstName: "Mae",
+    lastName: "May",
+    isAdmin: true,
+    address1: "1938 Hoover Avenue",
     city: "New York",
     country: "USA",
   },
   {
-    email_address: "amy@dingo.com",
+    email: "amy@dingo.com",
     password: "123amy",
-    first_name: "Amy",
-    last_name: "Chun",
-    is_admin: true,
-    address_line_1: "1064 Star Street",
+    firstName: "Amy",
+    lastName: "Chun",
+    isAdmin: true,
+    address1: "1064 Star Street",
     city: "San Francisco",
     country: "USA",
   },
   {
-    email_address: "kara@dingo.com",
+    email: "kara@dingo.com",
     password: "123kara",
-    first_name: "Kara",
-    last_name: "Cavanaugh",
-    is_admin: true,
-    address_line_1: "1008 Washington Street",
+    firstName: "Kara",
+    lastName: "Cavanaugh",
+    isAdmin: true,
+    address1: "1008 Washington Street",
     city: "Tacoma",
     country: "USA",
   },
 
   {
-    email_address: "maxiel@dingo.com",
+    email: "maxiel@dingo.com",
     password: "123maxiel",
-    first_name: "Maxiel",
-    last_name: "Mrvaljevic",
-    is_admin: true,
-    address_line_1: "001 Mallard Street",
+    firstName: "Maxiel",
+    lastName: "Mrvaljevic",
+    isAdmin: true,
+    address1: "001 Mallard Street",
     city: "Montenegro",
     country: "Montenegro",
   },
   {
-    email_address: "guest@dingo.com",
+    email: "guest@dingo.com",
     password: "123",
-    first_name: "guest",
-    last_name: "account",
-    is_admin: false,
-    address_line_1: "123 Test Street",
+    firstName: "guest",
+    lastName: "account",
+    isAdmin: false,
+    address1: "123 Test Street",
     city: "New York City",
     country: "USA",
   },
   {
-    email_address: "scottdal@gmail.com",
+    email: "scottdal@gmail.com",
     password: "123scott",
-    first_name: "Scott",
-    last_name: "D'Alessandro",
-    is_admin: false,
-    address_line_1: "204 Test Street",
+    firstName: "Scott",
+    lastName: "D'Alessandro",
+    isAdmin: false,
+    address1: "204 Test Street",
     city: "New York City",
     country: "USA",
   },
   {
-    email_address: "nimit@gmail.com",
+    email: "nimit@gmail.com",
     password: "123nimit",
-    first_name: "Nimit",
-    last_name: "Maru",
-    is_admin: false,
-    address_line_1: "208 Test Street",
+    firstName: "Nimit",
+    lastName: "Maru",
+    isAdmin: false,
+    address1: "208 Test Street",
     city: "New York City",
     country: "USA",
   },
   {
-    email_address: "david@gmail.com",
+    email: "david@gmail.com",
     password: "123david",
-    first_name: "David",
-    last_name: "Yang",
-    is_admin: false,
-    address_line_1: "209 Test Street",
+    firstName: "David",
+    lastName: "Yang",
+    isAdmin: false,
+    address1: "209 Test Street",
     city: "New York City",
     country: "USA",
   },
@@ -105,8 +105,8 @@ const products = [
     description:
       "Six-course meal by Michelin Chef Boyardee. Featuring miso marinated black cod, aged A5 wagyu, and fresh farm-to-table vegetables.",
     size: "Large",
-    inventory_quantity: 4,
-    image_url: "/images/bento2.png",
+    inventoryQty: 4,
+    imageUrl: "/images/bento2.png",
   },
   {
     name: "Wagyu-Uni Pairing",
@@ -114,8 +114,8 @@ const products = [
     description:
       "Freshly torched A5 wagyu nigiri is paired with freshly-cut radishes, topped with creamy Hokkaido uni.",
     size: "Medium",
-    inventory_quantity: 6,
-    image_url: "/images/bento3.png",
+    inventoryQty: 6,
+    imageUrl: "/images/bento3.png",
   },
   {
     name: "Daily Bento",
@@ -124,8 +124,8 @@ const products = [
       "Surprise yourself with our house bento, featuring sashimi from the freshest fish, caught daily",
     size: "Large",
     featured: true,
-    inventory_quantity: 20,
-    image_url: "/images/bento4.png",
+    inventoryQty: 20,
+    imageUrl: "/images/bento4.png",
   },
   {
     name: "Udon Duo",
@@ -133,8 +133,8 @@ const products = [
     description:
       "Garlic shrimp and stir-fried udon with a fresh radish and egg salad",
     size: "Large",
-    inventory_quantity: 20,
-    image_url: "/images/bento1.png",
+    inventoryQty: 20,
+    imageUrl: "/images/bento1.png",
   },
   {
     name: "Sushi and Tempura Pairing",
@@ -142,8 +142,8 @@ const products = [
     description:
       "Tempura shrimp with fresh salmon nigiri, spicy tuna roll, and accoutrements",
     size: "Large",
-    inventory_quantity: 30,
-    image_url: "/images/bento5.png",
+    inventoryQty: 30,
+    imageUrl: "/images/bento5.png",
   },
   {
     name: "Bouquet Bento",
@@ -151,9 +151,9 @@ const products = [
     description:
       "Beautifully arranged edible flowers atop a fresh, organic salad",
     size: "Medium",
-    inventory_quantity: 15,
+    inventoryQty: 15,
     featured: true,
-    image_url: "/images/bento6.png",
+    imageUrl: "/images/bento6.png",
   },
   {
     name: "Sashimi Special",
@@ -161,8 +161,8 @@ const products = [
     description:
       "Expertly cut scottish salmon belly, aged bluefin tuna, buttery yellowtail, young yellowtail, striped jack and sea urchin and placed artfully in this bento box.",
     size: "Small",
-    inventory_quantity: 6,
-    image_url: "/images/bento7.png",
+    inventoryQty: 6,
+    imageUrl: "/images/bento7.png",
   },
   {
     name: "Izakaya Bento",
@@ -170,16 +170,16 @@ const products = [
     description:
       "Ffeatures grilled shrimp, teriyaki Jidori chicken wing, grilled salmon, Hokkaido scallop sashimi salad, a sushi roll with albacore, shrimp, avocado, and cucumber, and loads of other hidden specialties.",
     size: "Medium",
-    inventory_quantity: 20,
-    image_url: "/images/bento8.png",
+    inventoryQty: 20,
+    imageUrl: "/images/bento8.png",
   },
   {
     name: "Vegetarian Bento",
     price: 20,
     description: "An assortment of pickled vegetables and house-made tofu.",
     size: "Medium",
-    inventory_quantity: 6,
-    image_url: "/images/bento9.png",
+    inventoryQty: 6,
+    imageUrl: "/images/bento9.png",
   },
   {
     name: "Pesto Party",
@@ -187,8 +187,8 @@ const products = [
     description:
       "House basil pesto with our daily pasta is served with a fruits, salad, and dessert",
     size: "Large",
-    inventory_quantity: 6,
-    image_url: "/images/bento10.png",
+    inventoryQty: 6,
+    imageUrl: "/images/bento10.png",
   },
   {
     name: "Katsu Chicken Bento",
@@ -196,18 +196,18 @@ const products = [
     description:
       "Crispy panko-fried chicken, salad, and rice in fun character shapes.",
     size: "Small",
-    inventory_quantity: 15,
-    image_url: "/images/bento11.png",
+    inventoryQty: 15,
+    imageUrl: "/images/bento11.png",
   },
-  // {
-  //   name: "Fishcake Ensemble",
-  //   price: 25,
-  //   description:
-  //     "Fishcakes in assorted shapes and flavors with character-cut sausages",
-  //   size: "Small",
-  //   inventory_quantity: 15,
-  //   image_url: "/images/bento12.png",
-  // },
+  {
+    name: "Fishcake Ensemble",
+    price: 25,
+    description:
+      "Fishcakes in assorted shapes and flavors with character-cut sausages",
+    size: "Small",
+    inventoryQty: 15,
+    imageUrl: "/images/bento12.png",
+  },
   {
     name: "Spring Rolls",
     price: 25,
@@ -216,7 +216,7 @@ const products = [
     size: "Small",
     featured: true,
     inventory_quantity: 20,
-    image_url: "/images/bento13.png",
+    imageUrl: "/images/bento13.png",
   },
   {
     name: "Picky Kiddies",
@@ -225,7 +225,7 @@ const products = [
       "Picky eaters at home? Enamour them with character-shaped egg and fish cakes with salmon roe and rice",
     size: "Small",
     inventory_quantity: 30,
-    image_url: "/images/bento14.png",
+    imageUrl: "/images/bento14.png",
   },
   {
     name: "Grilled Salmon",
@@ -235,27 +235,27 @@ const products = [
     size: "Medium",
     featured: true,
     inventory_quantity: 15,
-    image_url: "/images/bento15.png",
+    imageUrl: "/images/bento15.png",
   },
 ];
 
 const orders = [
   {
-    order_total: 260,
-    total_quantity: 2,
-    date_placed: "02-17-2023",
+    orderTotal: 260,
+    totalQty: 2,
+    datePlaced: "02-17-2023",
   },
   {
-    order_total: 110,
-    total_quantity: 5,
-    is_completed: false,
-    date_placed: "05-21-2021",
+    orderTotal: 110,
+    totalQty: 5,
+    isComplete: false,
+    datePlaced: "05-21-2021",
   },
   {
-    order_total: 80,
-    total_quantity: 1,
-    is_completed: true,
-    date_placed: "04-21-2021",
+    orderTotal: 80,
+    totalQty: 1,
+    isComplete: true,
+    datePlaced: "04-21-2021",
   },
 ];
 
@@ -299,9 +299,7 @@ const seed = async () => {
 };
 
 module.exports = seed;
-// If this module is being required from another module, then we just export the
-// function, to be used as necessary. But it will run right away if the module
-// is executed directly (e.g. `node seed.js` or `npm run seed`)
+
 if (require.main === module) {
   seed()
     .then(() => {
