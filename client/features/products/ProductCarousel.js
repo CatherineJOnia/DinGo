@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchFeaturedProduct,
+  fetchFeaturedProducts,
   selectFeaturedProducts,
 } from "../products/featuredProductsSlice";
 import { Link } from "react-router-dom";
@@ -26,7 +26,7 @@ const theme = createTheme({
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const featuredProducts = useSelctor(selectFeaturedProducts);
+  const featuredProducts = useSelector(selectFeaturedProducts);
 
   useEffect(() => {
     dispatch(fetchFeaturedProducts());

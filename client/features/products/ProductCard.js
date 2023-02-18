@@ -1,5 +1,5 @@
 import * as React from "react";
-import NavLink, { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -32,7 +32,7 @@ const ProductCard = ({
   return (
     <ThemeProvider theme={theme}>
       <Card sx={{ maxWidth: 345 }}>
-        <NavLink to={`/products/${productId}`}>
+        <Link to={`/products/${productId}`}>
           <CardActionArea>
             <CardMedia
               className="prod-card-img"
@@ -69,7 +69,7 @@ const ProductCard = ({
               </Button>
             </CardActions>
           </CardActionArea>
-        </NavLink>
+        </Link>
       </Card>
     </ThemeProvider>
   );

@@ -34,7 +34,7 @@ const AllProducts = () => {
           </button>
         </Link>
       </div>
-      {/* <ProductCarousel /> */}
+      <ProductCarousel />
       <Container maxWidth="md" className="product-container">
         <div className="all-prod-body">
           <h3>All Collections</h3>

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../shoppingCart/shoppingCartSlice";
+// import { addToCartAsync } from "../shoppingCart/shoppingCartSlice";
 import { fetchSingleProduct, selectSingleProduct } from "./singleProductSlice";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -26,3 +26,5 @@ const SingleProduct = () => {
     dispatch(fetchSingleProduct(productId));
   }, [dispatch]);
 };
+
+export default SingleProduct;
