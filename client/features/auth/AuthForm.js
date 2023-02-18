@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { authenticate } from "../store/authSlice";
+import { authenticate } from "./authSlice";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -125,7 +125,7 @@ const AuthForm = ({ name, displayName }) => {
           ) : (
             <Box
               component="form"
-              onSubmit={handleSubmit}
+              onSubmit={handleSignUp}
               name={name}
               noValidate
               sx={{ mt: 1 }}

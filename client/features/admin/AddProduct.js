@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addSingleProduct } from "../products/productsSlice";
+import { addProductAsync } from "../products/productsSlice";
 import { Link } from "react-router-dom";
 
 import { TextField, Grid, Button, InputAdornment } from "@mui/material";
