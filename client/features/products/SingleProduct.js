@@ -25,6 +25,58 @@ const SingleProduct = () => {
   useEffect(() => {
     dispatch(fetchSingleProduct(productId));
   }, [dispatch]);
+
+  return (
+    <div>
+      <main>
+        {this.props.is_admin ? (
+          <div className="adminBar">
+            <h5>Admin Control</h5>
+            <div className="adminBar">
+              <Link to={`/products/${product.id}/edit`}>
+                <button className="adminButton">
+                  <EditIcon fontSize="12" /> Edit
+                </button>
+              </Link>
+              <button
+                className="adminButton"
+                onClick={() => this.props.deleteProduct(product.id)}
+              >
+                <DeleteIcon fontSize="12" /> Delete
+              </button>
+            </div>
+          </div>
+        ) : null}
+        <div className="singleView">
+          <div>
+            <div className="back">
+              <Link to={"/products"}>
+                <ArrowBackIcon fontSize="12" /> Back to All
+              </Link>
+            </div>
+            <img
+              src={product.imageUrl}
+              className="featuredProduct"
+              alt={product.name}
+            />
+          </div>
+          <div className="left">
+            <h2>{product.name}</h2>
+            <div className="description">{product.description}</div>
+            <div className="price">${product.price}</div>
+            <button
+              onClick={() => {
+                return this.addToCart(product.id);
+              }}
+            >
+              <ShoppingCartIcon fontSize="25" /> Add To Cart
+            </button>
+            <div className="details"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  );
 };
 
 export default SingleProduct;
