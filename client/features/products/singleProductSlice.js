@@ -7,8 +7,8 @@ export const fetchSingleProduct = createAsyncThunk(
     try {
       const { data } = await axios.get(`/api/products/${productId}`);
       return data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      return "An error occurred in the fetchSingleProduct thunk!", err;
     }
   }
 );
@@ -25,8 +25,8 @@ export const editSingleProduct = createAsyncThunk(
         imageUrl,
       });
       return data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      return "An error occurred in the editSingleProduct thunk!", err;
     }
   }
 );
@@ -37,8 +37,8 @@ export const addSingleProduct = createAsyncThunk(
     try {
       const { data } = await axios.post("/api/cart", { productId });
       return data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      return "An error occurred in the addSingleProduct thunk!", err;
     }
   }
 );

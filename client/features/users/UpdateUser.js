@@ -12,11 +12,11 @@ const UpdateUser = () => {
     dispatch(fetchSingleUser(userId));
   }, [dispatch]);
 
-  const handleAdmin = (e) => {
-    setAdmin(e.target.value);
+  const handleAdmin = (evt) => {
+    setAdmin(evt.target.value);
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    evt.preventDefault();
     await dispatch(editSingleUser({ userId, isAdmin }));
   };
 

@@ -7,8 +7,8 @@ export const fetchSingleUser = createAsyncThunk(
     try {
       const { data } = await axios.get(`/api/users/${userId}`);
       return data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      return "An error occurred in the fetchSingleUser thunk!", err;
     }
   }
 );
@@ -21,8 +21,8 @@ export const editSingleUser = createAsyncThunk(
         isAdmin,
       });
       return data;
-    } catch (error) {
-      return error.message;
+    } catch (err) {
+      return "An error occurred in the editSingleUser thunk!", err;
     }
   }
 );

@@ -20,7 +20,7 @@ export const me = createAsyncThunk("auth/me", async () => {
     if (err.response.data) {
       return thunkAPI.rejectWithValue(err.response.data);
     } else {
-      return "There was an issue with your request.";
+      return "An error occurred in the 'me' authentication thunk!", err;
     }
   }
 });
@@ -42,7 +42,7 @@ export const authenticate = createAsyncThunk(
       if (err.response.data) {
         return thunkAPI.rejectWithValue(err.response.data);
       } else {
-        return "There was an issue with your request.";
+        return "An error occurred in the authenticate thunk!", err;
       }
     }
   }
