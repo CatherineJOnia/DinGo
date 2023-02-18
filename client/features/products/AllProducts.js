@@ -57,12 +57,12 @@ const AllProducts = () => {
                     key={product.id}
                   >
                     <ProductCard
-                      image={product.imageUrl}
-                      title={product.name}
+                      imageUrl={product.imageUrl}
+                      name={product.name}
                       description={product.description}
                       productId={product.id}
                       isAdmin={isAdmin}
-                      inventoryQuantity={product.inventoryQty}
+                      inventoryQty={product.inventoryQty}
                     />
                   </Grid>
                 );

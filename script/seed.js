@@ -164,7 +164,7 @@ const products = [
     name: "Izakaya Bento",
     price: 20,
     description:
-      "Ffeatures grilled shrimp, teriyaki Jidori chicken wing, grilled salmon, Hokkaido scallop sashimi salad, a sushi roll with albacore, shrimp, avocado, and cucumber, and loads of other hidden specialties.",
+      "Featuring grilled shrimp, teriyaki Jidori chicken wing, grilled salmon, Hokkaido scallop sashimi salad, a sushi roll with albacore, shrimp, avocado, and cucumber, and loads of other hidden specialtie, this bento is sure to be an exciting meal.",
     size: "Medium",
     inventoryQty: 20,
     imageUrl: "/images/bento8.png",
