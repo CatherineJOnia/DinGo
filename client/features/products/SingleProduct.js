@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-// import { addToCartAsync } from "../shoppingCart/shoppingCartSlice";
+import { deleteProductAsync } from "../products/productsSlice";
+import { addToCartAsync } from "../cart/cartSlice";
 import { fetchSingleProduct, selectSingleProduct } from "./singleProductSlice";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -33,14 +34,17 @@ const SingleProduct = () => {
           <div className="adminBar">
             <h5>Admin Control</h5>
             <div className="adminBar">
-              <Link to={`/products/${product.id}/edit`}>
+              <Link to={`/products/${productId}/edit`}>
                 <button className="adminButton">
                   <EditIcon fontSize="12" /> Edit
                 </button>
               </Link>
               <button
                 className="adminButton"
-                onClick={() => this.props.deleteProduct(product.id)}
+                onClick={async (evt) => {
+                  evt.preventDefault();
+                  await dispatch(deleteProductAsync({ productId }));
+                }}
               >
                 <DeleteIcon fontSize="12" /> Delete
               </button>
@@ -65,8 +69,9 @@ const SingleProduct = () => {
             <div className="description">{product.description}</div>
             <div className="price">${product.price}</div>
             <button
-              onClick={() => {
-                return this.addToCart(product.id);
+              onClick={async (evt) => {
+                evt.preventDefault();
+                await dispatch(addToCartAsync({ userId, productId }));
               }}
             >
               <ShoppingCartIcon fontSize="25" /> Add To Cart
