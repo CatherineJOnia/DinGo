@@ -1,4 +1,13 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCartAsync,
+  fetchOrderAsync,
+  addToCartAsync,
+  selectCart,
+} from "./cartSlice";
+import { me } from "../auth/authSlice";
+
 import Typography from "@mui/material/Typography";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -6,120 +15,131 @@ import ListItemText from "@mui/material/ListItemText";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 
-class Cart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: [],
-    };
-    this.setCartToState = this.setCartToState.bind(this);
-  }
+const Checkout = () => {
+  const dispatch = useDispatch();
+  const cart = useSelector(selectCart);
+  const { id } = useSelector((state) => state.auth.me);
 
-  async componentDidMount() {
-    const cart = JSON.parse(window.localStorage.cart);
-    try {
-      this.setCartToState(cart);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  useEffect(() => {
+    dispatch(me());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchOrderAsync(id));
+  }, [dispatch, id]);
 
-  setCartToState(cart) {
-    this.setState({
-      products: cart,
-    });
-  }
-
-  render() {
-    if (!window.localStorage.cart) {
-      window.localStorage.cart = JSON.stringify([]);
-    }
-    let guestCart = JSON.parse(window.localStorage.cart);
-    const productsInCart = this.state.products;
-
-    const total = productsInCart.reduce((subtotal, product) => {
-      subtotal += product.price * product.quantity;
-      return subtotal;
-    }, 0);
-
-    return (
-      <div className="cartReviewDiv">
-        <React.Fragment>
-          <Typography variant="h6" gutterBottom>
-            Order summary
-          </Typography>
-          <List disablePadding>
-            {guestCart.map((product) => (
-              <ListItem key={product.productId} sx={{ py: 1, px: 0 }}>
-                <ListItemText primary={product.name} />
-                <ButtonGroup
-                  size="small"
-                  aria-label="small outlined button group"
-                >
-                  <Button
-                    onClick={() => {
-                      if (product.quantity >= 1) {
-                        const _product = guestCart.filter((prod) => {
-                          return +prod.productId === product.id;
-                        })[0];
-                        const index = guestCart.indexOf(_product);
-                        product.quantity += 1;
-                        guestCart[index] = _product;
-                        window.localStorage.cart = JSON.stringify(guestCart);
-                        this.setCartToState(guestCart);
-                      }
-                      return;
-                    }}
-                  >
-                    +
-                  </Button>
-                  {<Button disabled>{product.quantity}</Button>}
-                  {
-                    <Button
-                      onClick={() => {
-                        if (product.quantity === 1) {
-                          product.quantity = 1;
-                          product.price = product.price;
-                        } else if (product.quantity > 1) {
-                          product.quantity -= 1;
-                          window.localStorage.cart = JSON.stringify(guestCart);
-                          this.setCartToState(guestCart);
-                        }
-                        return;
-                      }}
+  return (
+    <div className="all-items">
+      <h1>Review Items for Checkout</h1>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+        sx={{
+          justifyContent: "center",
+        }}
+      >
+        {cart.length < 1 && (
+          <div>
+            <h2>Cart is empty!</h2>
+          </div>
+        )}
+        {cart.map((product) => {
+          return (
+            <div key={product.productId}>
+              <Card
+                raised
+                sx={{
+                  width: 280,
+                  ml: 10,
+                  mb: 3,
+                  padding: "0.1em",
+                }}
+              >
+                <CardMedia
+                  component="img"
+                  image={product.imageUrl}
+                  height="300"
+                  width="300"
+                />
+                <CardContent>
+                  <Link to={`/products/${product.id}`}>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      align="center"
                     >
-                      -
-                    </Button>
-                  }
-                  <Button
-                    onClick={() => {
-                      window.localStorage.removeItem("cart");
-                      let cartState = productsInCart.filter((cartItem) => {
-                        return cartItem.productId !== product.productId;
-                      });
-                      let newCart = JSON.stringify(cartState);
-                      window.localStorage.setItem("cart", newCart);
-                      this.setCartToState(cartState);
+                      {product.name}
+                    </Typography>
+                  </Link>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    align="center"
+                  >
+                    {product.price}
+                  </Typography>
+                  <CardActions
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      "&:hover": {
+                        cursor: "pointer",
+                      },
                     }}
                   >
-                    Delete
-                  </Button>
-                </ButtonGroup>
-              </ListItem>
-            ))}
-            <hr />
+                    <Tooltip title="Remove from cart">
+                      <DeleteIcon
+                        type="delete"
+                        onClick={async (evt) => {
+                          evt.preventDefault();
+                          await dispatch(
+                            deleteCartProductAsync(product.id, product.name)
+                          );
+                          await dispatch(fetchOrderAsync(id));
+                        }}
+                      />
+                    </Tooltip>
+                  </CardActions>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        })}
+      </Grid>
+      <Link to="/orderconfirmation">
+        <div className="continue-shopping">
+          <Button
+            align="center"
+            variant="contained"
+            sx={{
+              bgcolor: "#28536B",
+              "&:hover": {
+                bgcolor: "#598588",
+              },
+            }}
+          >
+            Purchase
+          </Button>
+        </div>
+      </Link>
+      <Link to="/cart">
+        <div className="continue-shopping">
+          <Button
+            align="center"
+            variant="contained"
+            sx={{
+              bgcolor: "#28536B",
+              "&:hover": {
+                bgcolor: "#598588",
+              },
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      </Link>
+    </div>
+  );
+};
 
-            <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary="Total" />
-              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                ${total.toFixed(2)}
-              </Typography>
-            </ListItem>
-          </List>
-        </React.Fragment>
-      </div>
-    );
-  }
-}
-
-export default Cart;
+export default Checkout;

@@ -1,18 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchOrderAsync = createAsyncThunk(
-  "cart/fetchOrder",
-  async (userId) => {
-    try {
-      const { data } = await axios.get(`/api/order/${userId}`);
-      return data;
-    } catch (err) {
-      return "An error occurred in the fetchOrder thunk!", err;
-    }
-  }
-);
-
 export const fetchCartAsync = createAsyncThunk("cart/fetchCart", async () => {
   try {
     const { data } = await axios.get("/api/cart");
@@ -58,6 +46,18 @@ export const editCartAsync = createAsyncThunk(
       return data;
     } catch (err) {
       return "An error occurred in the editCart thunk!", err;
+    }
+  }
+);
+
+export const fetchOrderAsync = createAsyncThunk(
+  "cart/fetchOrder",
+  async (userId) => {
+    try {
+      const { data } = await axios.get(`/api/order/${userId}`);
+      return data;
+    } catch (err) {
+      return "An error occurred in the fetchOrder thunk!", err;
     }
   }
 );

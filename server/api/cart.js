@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.put("/checkout", async (req, res, next) => {
+router.put("/cart", async (req, res, next) => {
   try {
     const currentOrder = await Cart.findAll();
     if (currentOrder) {

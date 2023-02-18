@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import {
   selectSingleProduct,
   editSingleProduct,
@@ -66,7 +66,7 @@ const EditProduct = () => {
         />
       </div>
       <div className="left">
-        <h2>Edit {product.name}</h2>
+        <h2 align="center">Edit Product {product.name}</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name" className="editFormLabel">
             Product Name

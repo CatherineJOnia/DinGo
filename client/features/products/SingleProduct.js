@@ -27,27 +27,27 @@ const SingleProduct = () => {
   return (
     <div>
       <main>
-        {isAdmin ? (
+        {/* {isAdmin ? ( */}
+        <div className="adminBar">
+          <h5>Admin Control</h5>
           <div className="adminBar">
-            <h5>Admin Control</h5>
-            <div className="adminBar">
-              <Link to={`/products/${productId}/edit`}>
-                <button className="adminButton">
-                  <EditIcon fontSize="12" /> Edit
-                </button>
-              </Link>
-              <button
-                className="adminButton"
-                onClick={async (evt) => {
-                  evt.preventDefault();
-                  await dispatch(deleteProductAsync({ productId }));
-                }}
-              >
-                <DeleteIcon fontSize="12" /> Delete
+            <Link to={`/products/${productId}/edit`}>
+              <button className="adminButton">
+                <EditIcon fontSize="12" /> Edit
               </button>
-            </div>
+            </Link>
+            <button
+              className="adminButton"
+              onClick={async (evt) => {
+                evt.preventDefault();
+                await dispatch(deleteProductAsync({ productId }));
+              }}
+            >
+              <DeleteIcon fontSize="12" /> Delete
+            </button>
           </div>
-        ) : null}
+        </div>
+        {/* ) : null} */}
         <div className="singleView">
           <div>
             <div className="back">
