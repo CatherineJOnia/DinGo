@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Link } from "react-router-dom";
 import {
   fetchFeaturedProducts,
   selectFeaturedProducts,
 } from "../products/featuredProductsSlice";
-import { Link } from "react-router-dom";
 
 const FeaturedProducts = () => {
   const dispatch = useDispatch();
   const featuredProducts = useSelector(selectFeaturedProducts);
+
+  const navigate = useNavigate();
+  const routeChange = () => {
+    let path = "/products";
+    navigate(path);
+  };
 
   useEffect(() => {
     dispatch(fetchFeaturedProducts());
@@ -33,9 +39,7 @@ const FeaturedProducts = () => {
               ))
             : null}
         </div>
-        <Link to="/products">
-          <button>View All Products</button>
-        </Link>
+        <button onClick={routeChange}>View All Products</button>
       </div>
     </center>
   );
