@@ -42,7 +42,6 @@ const users = [
     city: "Tacoma",
     country: "USA",
   },
-
   {
     email: "maxiel@dingo.com",
     password: "123maxiel",

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Order = require("../db/models/Order");
 const User = require("../db/models/User");
-const Order_Detail = require("../db/models/Order_Detail");
+const Cart = require("../db/models/Cart");
 const { token } = require("morgan");
 const Product = require("../db/models/Product");
 
