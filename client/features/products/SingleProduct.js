@@ -29,7 +29,7 @@ const SingleProduct = () => {
   return (
     <div>
       <main>
-        {this.props.is_admin ? (
+        {isAdmin ? (
           <div className="adminBar">
             <h5>Admin Control</h5>
             <div className="adminBar">
