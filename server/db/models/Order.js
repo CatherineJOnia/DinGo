@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 const Product = require("../models/Product");
-const Cart = require("../models/Order_Detail");
+const Cart = require("../models/Cart");
 const User = require("./User");
 
 const Order = db.define("order", {
