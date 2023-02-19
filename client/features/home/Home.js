@@ -9,7 +9,7 @@ export const Home = (props) => {
 
   return (
     <div id="home">
-      <Header />
+      <Header firstName={props.firstName} />
       <About />
       <FeaturedProducts />
     </div>

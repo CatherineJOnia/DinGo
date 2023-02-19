@@ -40,6 +40,7 @@ const AuthForm = ({ name, displayName }) => {
     const password = evt.target.password.value;
 
     dispatch(authenticate({ email, password, method: formName }));
+    navigate("./home");
   };
 
   const handleSignUp = (evt) => {
@@ -59,6 +60,7 @@ const AuthForm = ({ name, displayName }) => {
         method: formName,
       })
     );
+    navigate("./home");
   };
 
   return (
