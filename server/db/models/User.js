@@ -62,8 +62,8 @@ User.prototype.generateToken = function () {
   return jwt.sign({ id: this.id }, process.env.JWT);
 };
 
-User.authenticate = async function ({ email_address, password }) {
-  const user = await this.findOne({ where: { email_address } });
+User.authenticate = async function ({ email, password }) {
+  const user = await this.findOne({ where: { email } });
   if (!user || !(await user.correctPassword(password))) {
     const error = Error("Incorrect email/password");
     error.status = 401;

@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { authenticate } from "./authSlice";
 
 import Avatar from "@mui/material/Avatar";
@@ -30,6 +31,7 @@ const theme = createTheme({
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();

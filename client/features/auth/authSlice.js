@@ -27,10 +27,10 @@ export const me = createAsyncThunk("auth/me", async () => {
 
 export const authenticate = createAsyncThunk(
   "auth/authenticate",
-  async ({ username, password, method, isAdmin, first, last }, thunkAPI) => {
+  async ({ email, password, method, isAdmin, first, last }, thunkAPI) => {
     try {
       const res = await axios.post(`/auth/${method}`, {
-        username,
+        email,
         password,
         isAdmin,
         first,
