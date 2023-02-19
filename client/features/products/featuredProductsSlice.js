@@ -9,7 +9,7 @@ export const fetchFeaturedProducts = createAsyncThunk(
       console.log("featuredProducts data", data);
       return data;
     } catch (err) {
-      return "An error occurred in the fetchFeaturedProducts thunk!", err;
+      console.log("An error occurred in the fetchFeaturedProducts thunk!", err);
     }
   }
 );

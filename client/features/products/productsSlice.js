@@ -8,7 +8,7 @@ export const fetchProductsAsync = createAsyncThunk(
       const { data } = await axios.get("/api/products");
       return data;
     } catch (err) {
-      return "An error occurred in the fetchProducts thunk!", err;
+      console.log("An error occurred in the fetchProducts thunk!", err);
     }
   }
 );
@@ -26,7 +26,7 @@ export const addProductAsync = createAsyncThunk(
       });
       return data;
     } catch (err) {
-      return "An error occurred in the addProduct thunk!", err;
+      console.log("An error occurred in the addProduct thunk!", err);
     }
   }
 );
@@ -38,7 +38,7 @@ export const deleteProductAsync = createAsyncThunk(
       const { data } = await axios.delete(`/api/products/${productId}`);
       return data;
     } catch (err) {
-      return "An error occurred in the deleteProduct thunk!", err;
+      console.log("An error occurred in the deleteProduct thunk!", err);
     }
   }
 );

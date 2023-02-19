@@ -6,7 +6,7 @@ export const fetchUsersAsync = createAsyncThunk("users/fetchAll", async () => {
     const { data } = await axios.get("/api/users");
     return data;
   } catch (err) {
-    return "An error occurred in the fetchUsers thunk!", err;
+    console.log("An error occurred in the fetchUsers thunk!", err);
   }
 });
 export const usersSlice = createSlice({

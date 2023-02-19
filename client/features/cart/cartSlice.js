@@ -6,7 +6,7 @@ export const fetchCartAsync = createAsyncThunk("cart/fetchCart", async () => {
     const { data } = await axios.get("/api/cart");
     return data;
   } catch (err) {
-    return "An error occurred in the fetchCart thunk!", err;
+    console.log("An error occurred in the fetchCart thunk!", err);
   }
 });
 
@@ -17,7 +17,7 @@ export const addToCartAsync = createAsyncThunk(
       const { data } = await axios.put(`/api/order/${userId}/${productId}`);
       return data;
     } catch (err) {
-      return "An error occurred in the addToCart thunk!", err;
+      console.log("An error occurred in the addToCart thunk!", err);
     }
   }
 );
@@ -31,7 +31,7 @@ export const deleteFromCartAsync = createAsyncThunk(
       });
       return data;
     } catch (err) {
-      return "An error occurred in the deleteFromCart thunk!", err;
+      console.log("An error occurred in the deleteFromCart thunk!", err);
     }
   }
 );
@@ -45,7 +45,7 @@ export const editCartAsync = createAsyncThunk(
       });
       return data;
     } catch (err) {
-      return "An error occurred in the editCart thunk!", err;
+      console.log("An error occurred in the editCart thunk!", err);
     }
   }
 );
@@ -57,7 +57,7 @@ export const fetchOrderAsync = createAsyncThunk(
       const { data } = await axios.get(`/api/order/${userId}`);
       return data;
     } catch (err) {
-      return "An error occurred in the fetchOrder thunk!", err;
+      console.log("An error occurred in the fetchOrder thunk!", err);
     }
   }
 );
@@ -72,7 +72,7 @@ export const createOrderAsync = createAsyncThunk(
       });
       return data;
     } catch (err) {
-      return "An error occurred in the createOrer thunk!", err;
+      console.log("An error occurred in the createOrer thunk!", err);
     }
   }
 );

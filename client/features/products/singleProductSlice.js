@@ -38,7 +38,7 @@ export const addSingleProduct = createAsyncThunk(
       const { data } = await axios.post("/api/cart", { productId });
       return data;
     } catch (err) {
-      return "An error occurred in the addSingleProduct thunk!", err;
+      console.log("An error occurred in the addSingleProduct thunk!", err);
     }
   }
 );
