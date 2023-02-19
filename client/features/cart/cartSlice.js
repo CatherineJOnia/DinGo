@@ -77,6 +77,18 @@ export const createOrderAsync = createAsyncThunk(
   }
 );
 
+export const checkoutCart = createAsyncThunk(
+  "/cart/checkout",
+  async (userId) => {
+    try {
+      const { data } = await axios.put(`/api/orders/cart/checkout/${userId}`);
+      return data;
+    } catch (err) {
+      console.log("An error occured in the checkoutCart thunk!", err);
+    }
+  }
+);
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState: [],
