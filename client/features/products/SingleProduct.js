@@ -72,7 +72,6 @@ const SingleProduct = () => {
               onClick={async (evt) => {
                 evt.preventDefault();
                 await dispatch(addToCartAsync({ userId, productId }));
-                dispatch(navigate("/cart"));
               }}
             >
               <ShoppingCartIcon fontSize="25" /> Add To Cart

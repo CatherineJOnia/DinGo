@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { Cart, Product } = require("../db");
+const { Cart, Order, Product } = require("../db");
 module.exports = router;
 
 router.get("/", async (req, res, next) => {
@@ -22,6 +22,26 @@ router.put("/cart", async (req, res, next) => {
     }
   } catch (err) {
     next(err);
+  }
+});
+
+router.post("/:userId/:productId", async (req, res, next) => {
+  try {
+    let order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isComplete: false,
+      },
+    });
+    const product = await Product.findOne({
+      where: {
+        id: req.params.productId,
+      },
+    });
+    await order.addProduct(product);
+    res.send(order);
+  } catch (error) {
+    next(error);
   }
 });
 

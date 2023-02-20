@@ -5,6 +5,51 @@ const User = require("../db/models/User");
 const Cart = require("../db/models/Cart");
 const Product = require("../db/models/Product");
 
+router.get("/", async (req, res, next) => {
+  try {
+    const orders = await Order.findAll();
+
+    res.json(orders);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/:userId", async (req, res, next) => {
+  try {
+    const order = await Order.findOne({
+      where: {
+        isComplete: false,
+        userId: req.params.userId,
+      },
+    });
+    const productCart = await order.getProducts();
+    res.status(200).json(productCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:userId/:productId", async (req, res, next) => {
+  try {
+    let order = await Order.findOne({
+      where: {
+        userId: req.params.userId,
+        isComplete: false,
+      },
+    });
+    const product = await Product.findOne({
+      where: {
+        id: req.params.productId,
+      },
+    });
+    await order.addProduct(product);
+    res.send(order);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get("/cart/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
@@ -21,36 +66,36 @@ router.get("/cart/:userId", async (req, res, next) => {
   }
 });
 
-router.put("/cart/addToCart/:userId/:productId", async (req, res, next) => {
-  try {
-    const userId = req.params.userId;
-    const productId = req.params.productId;
-    let quantity = 1;
-    let cart = await Order.findOne(userId);
-    let product = await Product.findOne(productId);
-    let matchingOrder = await Cart.findMatchingOrder(productId, cart.id);
+// router.post("/cart/addToCart/:userId/:productId", async (req, res, next) => {
+//   try {
+//     const userId = req.params.userId;
+//     const productId = req.params.productId;
+//     let quantity = 1;
+//     let cart = await Order.findOne(userId);
+//     let product = await Product.findOne(productId);
+//     let matchingOrder = await Cart.findMatchingOrder(productId, cart.id);
 
-    if (matchingOrder) {
-      matchingOrder.adjustItemOrder(product.price, matchingOrder.quantity + 1);
-      await matchingOrder.save();
-      res.send(matchingOrder);
-    } else {
-      let totalPrice = quantity * product.price;
+//     if (matchingOrder) {
+//       matchingOrder.adjustItemOrder(product.price, matchingOrder.quantity + 1);
+//       await matchingOrder.save();
+//       res.send(matchingOrder);
+//     } else {
+//       let totalPrice = quantity * product.price;
 
-      await cart.addProduct(product, {
-        through: {
-          quantity,
-          totalPrice,
-        },
-      });
+//       await cart.addProduct(product, {
+//         through: {
+//           quantity,
+//           totalPrice,
+//         },
+//       });
 
-      let newOrder = await Cart.findMatchingOrder(productId, cart.id);
-      res.send(newOrder);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+//       let newOrder = await Cart.findMatchingOrder(productId, cart.id);
+//       res.send(newOrder);
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// });
 
 router.put(
   "/cart/updateItemQuantity/:cartId/:productId",
