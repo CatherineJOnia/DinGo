@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { deleteProductAsync } from "../products/productsSlice";
 import { addToCartAsync } from "../cart/cartSlice1";
 // import { addItemToCart } from "../cart/cartSlice";
@@ -13,10 +13,11 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const SingleProduct = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const product = useSelector(selectSingleProduct);
   const { productId } = useParams();
 
-  const isAdmin = useSelector((state) => state.auth.me.isAdmin);
+  // const isAdmin = useSelector((state) => state.auth.me.isAdmin);
 
   const user = useSelector((state) => state.auth.me);
   const userId = user.id;
@@ -42,6 +43,7 @@ const SingleProduct = () => {
               onClick={async (evt) => {
                 evt.preventDefault();
                 await dispatch(deleteProductAsync({ productId }));
+                dispatch(navigate("/products"));
               }}
             >
               <DeleteIcon fontSize="12" /> Delete
@@ -70,6 +72,7 @@ const SingleProduct = () => {
               onClick={async (evt) => {
                 evt.preventDefault();
                 await dispatch(addToCartAsync({ userId, productId }));
+                dispatch(navigate("/cart"));
               }}
             >
               <ShoppingCartIcon fontSize="25" /> Add To Cart

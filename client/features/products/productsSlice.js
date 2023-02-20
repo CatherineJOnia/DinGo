@@ -33,7 +33,7 @@ export const addProductAsync = createAsyncThunk(
 
 export const deleteProductAsync = createAsyncThunk(
   "products/deleteProduct",
-  async (productId) => {
+  async ({ productId }) => {
     try {
       const { data } = await axios.delete(`/api/products/${productId}`);
       return data;
