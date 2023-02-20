@@ -11,10 +11,10 @@ export const fetchCartAsync = createAsyncThunk("cart/fetchCart", async () => {
 });
 
 export const addToCartAsync = createAsyncThunk(
-  "order/addToCart",
+  "cart/addToCart",
   async ({ userId, productId }) => {
     try {
-      const { data } = await axios.put(`/api/order/${userId}/${productId}`);
+      const { data } = await axios.post(`/api/cart/${userId}/${productId}`);
       return data;
     } catch (err) {
       console.log("An error occurred in the addToCart thunk!", err);
@@ -78,7 +78,7 @@ export const createOrderAsync = createAsyncThunk(
 );
 
 export const checkoutCart = createAsyncThunk(
-  "/cart/checkout",
+  "cart/checkout",
   async (userId) => {
     try {
       const { data } = await axios.put(`/api/orders/cart/checkout/${userId}`);

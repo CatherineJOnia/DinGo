@@ -2,7 +2,6 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const Product = require("../models/Product");
 const Cart = require("../models/Cart");
-const User = require("./User");
 
 const Order = db.define("order", {
   orderTotal: Sequelize.INTEGER,
@@ -15,7 +14,6 @@ const Order = db.define("order", {
   dateShipped: Sequelize.DATEONLY,
 });
 
-//this method will find a cart - the open order associated with a userId passed into the method
 Order.findCart = async function (userId) {
   try {
     let cart = await this.findOne({
@@ -32,7 +30,6 @@ Order.findCart = async function (userId) {
   }
 };
 
-// this method creates a new cart and creates the association between user and order
 Order.createCart = async (userId, user) => {
   if (user === null) return null;
   const cart = await Order.create();
@@ -41,7 +38,6 @@ Order.createCart = async (userId, user) => {
   return cart;
 };
 
-//find the contents of a cart , aka an order that matches the orderId passed in ... and include details on the related products
 Order.findCartContents = async function (orderId) {
   try {
     const cartContents = this.findAll({

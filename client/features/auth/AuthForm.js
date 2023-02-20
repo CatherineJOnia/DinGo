@@ -60,7 +60,7 @@ const AuthForm = ({ name, displayName }) => {
         method: formName,
       })
     );
-    navigate("./home");
+    navigate("./login");
   };
 
   return (
