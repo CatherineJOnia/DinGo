@@ -1,23 +1,26 @@
-import React, { useEffect } from "react";
-import { checkoutCart } from "./cartSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, Link } from "react-router-dom";
+import { checkoutCartAsync, selectCart } from "./cartSlice";
+import { selectSingleProduct } from "../products/singleProductSlice";
 
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import GuestCart from "./GuestCart";
 import Review from "./Review";
 
-import CssBaseline from "@mui/material/CssBaseline";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Paper from "@mui/material/Paper";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  CssBaseline,
+  Box,
+  Container,
+  Paper,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-import { connect } from "react-redux";
 
 const steps = ["Review your order", "Shipping address", "Payment details"];
 
@@ -35,11 +38,11 @@ const theme = createTheme({
   },
 });
 
-function Checkout(props) {
+const Checkout = (props) => {
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return props.user.id ? <Review /> : <GuestCart />;
+        return userId ? <Review /> : <GuestCart />;
       case 1:
         return <AddressForm />;
       case 2:
@@ -49,26 +52,36 @@ function Checkout(props) {
     }
   }
 
-  const [activeStep, setActiveStep] = React.useState(0);
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.me.id);
+  // const userId = props.user.id;
+  const isLoggedIn = useSelector((state) => !state.auth.me.id);
+  const product = useSelector(selectSingleProduct);
+  const cart = useSelector(selectCart);
+  const { productId } = useParams();
 
-  const handleNext = () => {
-    if (props.user.id) {
+  const [quantityToAdd, setQuantityToAdd] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
+
+  const handleNext = async (event) => {
+    event.preventDefault();
+    if (isLoggedIn) {
       setActiveStep(activeStep + 1);
     } else {
       alert("Please sign in to Checkout!");
     }
   };
 
-  const handleBack = () => {
+  const handleBack = async (event) => {
+    event.preventDefault();
     setActiveStep(activeStep - 1);
   };
 
-  const handleSubmit = (id) => {
-    props.checkoutCart(props.user.id);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    await dispatch(checkoutCartAsync(userId));
     setActiveStep(activeStep + 1);
   };
-
-  const userId = props.user.id;
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,7 +143,7 @@ function Checkout(props) {
                       sx={{ mt: 3, ml: 1 }}
                       color="secondary"
                     >
-                      {userId ? "Next" : "Sign in to Checkout"}
+                      {isLoggedIn ? "Next" : "Sign in to Checkout"}
                     </Button>
                   )}
                 </Box>
@@ -141,14 +154,6 @@ function Checkout(props) {
       </Container>
     </ThemeProvider>
   );
-}
+};
 
-const mapState = (state) => ({
-  user: state.auth,
-});
-
-const mapDispatch = (dispatch) => ({
-  checkoutCart: (userId) => dispatch(checkoutCart(userId)),
-});
-
-export default connect(mapState, mapDispatch)(Checkout);
+export default Checkout;
