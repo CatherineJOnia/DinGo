@@ -2,9 +2,8 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { deleteProductAsync } from "../products/productsSlice";
-import { addToCartAsync } from "../cart/cartSlice1";
-// import { addItemToCart } from "../cart/cartSlice";
 import { fetchSingleProduct, selectSingleProduct } from "./singleProductSlice";
+import { addToCartAsync } from "../cart/cartSlice";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import EditIcon from "@mui/icons-material/Edit";
