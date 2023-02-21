@@ -38,7 +38,7 @@ const theme = createTheme({
   },
 });
 
-const Checkout = (props) => {
+const Checkout = () => {
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -54,8 +54,7 @@ const Checkout = (props) => {
 
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.me.id);
-  // const userId = props.user.id;
-  const isLoggedIn = useSelector((state) => !state.auth.me.id);
+  const isLoggedIn = useSelector((state) => state.auth.me.id);
   const product = useSelector(selectSingleProduct);
   const cart = useSelector(selectCart);
   const { productId } = useParams();
@@ -65,7 +64,7 @@ const Checkout = (props) => {
 
   const handleNext = async (event) => {
     event.preventDefault();
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       setActiveStep(activeStep + 1);
     } else {
       alert("Please sign in to Checkout!");

@@ -30,10 +30,6 @@ router.put("/addToCart/:userId/:productId", async (req, res, next) => {
     const userId = req.params.userId;
     const productId = req.params.productId;
     let quantity = 1;
-
-    console.log("userId backend", userId);
-    console.log("productId backend", productId);
-
     let cart = await Order.findCart(userId);
     let product = await Product.findByPk(productId);
     let matchingOrder = await Cart.findMatchingOrder(productId, cart.id);

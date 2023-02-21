@@ -21,32 +21,34 @@ import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 const Review = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.me.id);
-  const cart = useSelector(selectCart);
+  const cart = useSelector((state) => state.cart);
   const auth = useSelector((state) => state.auth);
   const { orderId } = useParams();
   const { productId } = useParams();
   const { products } = useParams();
+  const orders = useSelector((state) => state.auth.me.orders);
+  const me = useSelector((state) => state.auth.me);
 
   let quantity = 1;
 
   let productNameMap = {};
   {
     console.log("cart cart", cart);
-    // cart && cart.length > 0
-    //   ? cart.products.forEach((product) => {
-    //       productNameMap[product.id] = product.name;
-    //     })
-    //   : null;
+    cart && cart.length > 0
+      ? cart.forEach((product) => {
+          productNameMap[productId] = product.name;
+        })
+      : null;
   }
 
   const handleIncrement = (orderId, productId, quantity) => {
     let newQuantity = quantity + 1;
-    updateItemQuantityAsync(orderId, productId, newQuantity);
+    editCartAsync(orderId, productId, newQuantity);
   };
 
   const handleDecrement = (orderId, productId, quantity) => {
     let newQuantity = quantity - 1;
-    updateItemQuantityAsync(orderId, productId, newQuantity);
+    editCartAsync(orderId, productId, newQuantity);
   };
 
   const handleDelete = async (event) => {
@@ -56,8 +58,6 @@ const Review = () => {
 
   useEffect(() => {
     dispatch(fetchOrderAsync(userId));
-    // dispatch(updateItemQuantityAsync(orderId, productId, quantity));
-    // dispatch(editCartAsync(orderId));
   }, [dispatch]);
 
   return (
@@ -144,7 +144,7 @@ const Review = () => {
                   Shipping To:
                 </Typography>
                 <Typography gutterBottom>
-                  {auth.firstName} {auth.lastName}
+                  {auth.me.firstName} {auth.me.lastName}
                 </Typography>
               </Grid>
               <Grid item container direction="column" xs={12} sm={6}>

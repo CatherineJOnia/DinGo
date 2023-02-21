@@ -17,14 +17,17 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:userId", async (req, res, next) => {
   try {
-    const order = await Order.findOne({
+    const orderToFulfill = await Order.findOne({
       where: {
         isComplete: false,
         userId: req.params.userId,
       },
     });
-    const productCart = await order.getProducts();
+    const productCart = await orderToFulfill.getProducts();
+    console.log("orderToFulfill", orderToFulfill);
+    console.log("productCart", productCart);
     res.status(200).json(productCart);
+    console.log("productCart hello", productCart);
   } catch (error) {
     next(error);
   }

@@ -10,32 +10,28 @@ export const fetchCartAsync = createAsyncThunk("cart/fetchCart", async () => {
   }
 });
 
+export const fetchOrderAsync = createAsyncThunk(
+  "cart/fetchOrder",
+  async (userId) => {
+    try {
+      const { data } = await axios.get(`/api/order/${userId}`);
+      return data;
+    } catch (err) {
+      console.log("An error occurred in the fetchOrder thunk!", err);
+    }
+  }
+);
+
 export const addToCartAsync = createAsyncThunk(
   "cart/addToCart",
   async ({ userId, productId }) => {
     try {
-      console.log("userId frontend", userId);
-      console.log("productId frontend", productId);
       const { data } = await axios.put(
         `/api/cart/addToCart/${userId}/${productId}`
       );
       return data;
     } catch (err) {
       console.log("An error occurred in the addToCart thunk!", err);
-    }
-  }
-);
-
-export const deleteFromCartAsync = createAsyncThunk(
-  "cart/deleteFromCart",
-  async (id, product) => {
-    try {
-      const { data } = await axios.delete(`/api/cart/${id}`, {
-        product,
-      });
-      return data;
-    } catch (err) {
-      console.log("An error occurred in the deleteFromCart thunk!", err);
     }
   }
 );
@@ -54,14 +50,14 @@ export const editCartAsync = createAsyncThunk(
   }
 );
 
-export const fetchOrderAsync = createAsyncThunk(
-  "cart/fetchOrder",
+export const checkoutCartAsync = createAsyncThunk(
+  "cart/checkout",
   async (userId) => {
     try {
-      const { data } = await axios.get(`/api/order/${userId}`);
+      const { data } = await axios.put(`/api/orders/cart/checkout/${userId}`);
       return data;
     } catch (err) {
-      console.log("An error occurred in the fetchOrder thunk!", err);
+      console.log("An error occured in the checkoutCart thunk!", err);
     }
   }
 );
@@ -81,14 +77,16 @@ export const createOrderAsync = createAsyncThunk(
   }
 );
 
-export const checkoutCart = createAsyncThunk(
-  "cart/checkout",
-  async (userId) => {
+export const deleteFromCartAsync = createAsyncThunk(
+  "cart/deleteFromCart",
+  async (id, product) => {
     try {
-      const { data } = await axios.put(`/api/orders/cart/checkout/${userId}`);
+      const { data } = await axios.delete(`/api/cart/${id}`, {
+        product,
+      });
       return data;
     } catch (err) {
-      console.log("An error occured in the checkoutCart thunk!", err);
+      console.log("An error occurred in the deleteFromCart thunk!", err);
     }
   }
 );
