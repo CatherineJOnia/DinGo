@@ -30,27 +30,7 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
-router.put("/:userId/:productId", async (req, res, next) => {
-  try {
-    let order = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isComplete: false,
-      },
-    });
-    const product = await Product.findOne({
-      where: {
-        id: req.params.productId,
-      },
-    });
-    await order.addProduct(product);
-    res.send(order);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get("/cart/:userId", async (req, res, next) => {
+router.get("/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
     let cart = await Order.findCart(userId);
@@ -66,57 +46,23 @@ router.get("/cart/:userId", async (req, res, next) => {
   }
 });
 
-// router.post("/cart/addToCart/:userId/:productId", async (req, res, next) => {
-//   try {
-//     const userId = req.params.userId;
-//     const productId = req.params.productId;
-//     let quantity = 1;
-//     let cart = await Order.findOne(userId);
-//     let product = await Product.findOne(productId);
-//     let matchingOrder = await Cart.findMatchingOrder(productId, cart.id);
+router.put("/updateItemQuantity/:cartId/:productId", async (req, res, next) => {
+  try {
+    const cartId = req.params.cartId;
+    let productId = req.params.productId;
+    let quantity = req.body.quantity;
+    let product = await Product.findByPk(productId);
+    let matchingOrder = await Cart.findMatchingOrder(productId, cartId);
 
-//     if (matchingOrder) {
-//       matchingOrder.adjustItemOrder(product.price, matchingOrder.quantity + 1);
-//       await matchingOrder.save();
-//       res.send(matchingOrder);
-//     } else {
-//       let totalPrice = quantity * product.price;
-
-//       await cart.addProduct(product, {
-//         through: {
-//           quantity,
-//           totalPrice,
-//         },
-//       });
-
-//       let newOrder = await Cart.findMatchingOrder(productId, cart.id);
-//       res.send(newOrder);
-//     }
-//   } catch (error) {
-//     next(error);
-//   }
-// });
-
-router.put(
-  "/cart/updateItemQuantity/:cartId/:productId",
-  async (req, res, next) => {
-    try {
-      const cartId = req.params.cartId;
-      let productId = req.params.productId;
-      let quantity = req.body.quantity;
-      let product = await Product.findByPk(productId);
-      let matchingOrder = await Cart.findMatchingOrder(productId, cartId);
-
-      await matchingOrder.adjustItemOrder(product.price, quantity);
-      await matchingOrder.save();
-      res.send(matchingOrder);
-    } catch (error) {
-      next(error);
-    }
+    await matchingOrder.adjustItemOrder(product.price, quantity);
+    await matchingOrder.save();
+    res.send(matchingOrder);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
-router.get("/cart/updateTotals/:cartId", async (req, res, next) => {
+router.get("/updateTotals/:cartId", async (req, res, next) => {
   let cartId = req.params.cartId;
   let cart = await Order.findByPk(cartId);
   let cartContents = await Order.findCartContents(cartId);
@@ -128,7 +74,7 @@ router.get("/cart/updateTotals/:cartId", async (req, res, next) => {
   res.send({ orderTotal });
 });
 
-router.put("/cart/checkout/:userId", async (req, res, next) => {
+router.put("/checkout/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
     let cart = await Order.findCart(userId);
@@ -144,19 +90,16 @@ router.put("/cart/checkout/:userId", async (req, res, next) => {
   }
 });
 
-router.delete(
-  "/cart/deleteItem/:orderId/:productId",
-  async (req, res, next) => {
-    try {
-      const orderId = req.params.orderId;
-      const productId = req.params.productId;
-      const deleted = await Cart.findMatchingOrder(productId, orderId);
-      await deleted.destroy();
-      res.send(deleted);
-    } catch (error) {
-      next(error);
-    }
+router.delete("/deleteItem/:orderId/:productId", async (req, res, next) => {
+  try {
+    const orderId = req.params.orderId;
+    const productId = req.params.productId;
+    const deleted = await Cart.findMatchingOrder(productId, orderId);
+    await deleted.destroy();
+    res.send(deleted);
+  } catch (error) {
+    next(error);
   }
-);
+});
 
 module.exports = router;

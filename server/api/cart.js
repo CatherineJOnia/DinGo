@@ -25,21 +25,33 @@ router.put("/cart", async (req, res, next) => {
   }
 });
 
-router.post("/:userId/:productId", async (req, res, next) => {
+router.put("/addToCart/:userId/:productId", async (req, res, next) => {
   try {
-    let order = await Order.findOne({
-      where: {
-        userId: req.params.userId,
-        isComplete: false,
-      },
-    });
-    const product = await Product.findOne({
-      where: {
-        id: req.params.productId,
-      },
-    });
-    await order.addProduct(product);
-    res.send(order);
+    const userId = req.params.userId;
+    const productId = req.params.productId;
+    let quantity = 1;
+
+    console.log("userId backend", userId);
+    console.log("productId backend", productId);
+
+    let cart = await Order.findCart(userId);
+    let product = await Product.findByPk(productId);
+    let matchingOrder = await Cart.findMatchingOrder(productId, cart.id);
+    if (matchingOrder) {
+      matchingOrder.adjustItemOrder(product.price, matchingOrder.quantity + 1);
+      await matchingOrder.save();
+      res.send(matchingOrder);
+    } else {
+      let totalPrice = quantity * product.price;
+      await cart.addProduct(product, {
+        through: {
+          quantity,
+          totalPrice,
+        },
+      });
+      let newOrder = await Cart.findMatchingOrder(productId, cart.id);
+      res.send(newOrder);
+    }
   } catch (error) {
     next(error);
   }
