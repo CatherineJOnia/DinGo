@@ -24,26 +24,7 @@ router.get("/:userId", async (req, res, next) => {
       },
     });
     const productCart = await orderToFulfill.getProducts();
-    console.log("orderToFulfill", orderToFulfill);
-    console.log("productCart", productCart);
     res.status(200).json(productCart);
-    console.log("productCart hello", productCart);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get("/:userId", async (req, res, next) => {
-  try {
-    const userId = req.params.userId;
-    let cart = await Order.findCart(userId);
-    let cartContents = await Order.findCartContents(cart.dataValues.id);
-    let orderTotal = cart.findTotalPrice(cartContents[0].dataValues.order);
-    let totalQty = cart.findTotalQuantity(cartContents[0].dataValues.order);
-    cartContents[0].dataValues.orderTotal = orderTotal;
-    cartContents[0].dataValues.totalQuantity = totalQty;
-    cart.save();
-    res.send(cartContents);
   } catch (error) {
     next(error);
   }

@@ -21,7 +21,7 @@ import { FormControl, InputLabel, NativeSelect } from "@mui/material";
 const Review = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.me.id);
-  const cart = useSelector((state) => state.cart);
+  const cart = useSelector(selectCart);
   const auth = useSelector((state) => state.auth);
   const { orderId } = useParams();
   const { productId } = useParams();
@@ -35,7 +35,7 @@ const Review = () => {
   {
     console.log("cart cart", cart);
     cart && cart.length > 0
-      ? cart.forEach((product) => {
+      ? cart.map((product) => {
           productNameMap[productId] = product.name;
         })
       : null;
@@ -134,7 +134,7 @@ const Review = () => {
               <ListItem sx={{ py: 1, px: 0 }}>
                 <ListItemText primary="Total" />
                 <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                  ${cart[0].orderTotal}
+                  ${cart.orderTotal}
                 </Typography>
               </ListItem>
             </List>

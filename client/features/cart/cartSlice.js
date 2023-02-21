@@ -14,7 +14,7 @@ export const fetchOrderAsync = createAsyncThunk(
   "cart/fetchOrder",
   async (userId) => {
     try {
-      const { data } = await axios.get(`/api/order/${userId}`);
+      const { data } = await axios.get(`/api/orders/${userId}`);
       return data;
     } catch (err) {
       console.log("An error occurred in the fetchOrder thunk!", err);
