@@ -29,31 +29,20 @@ const Review = () => {
   const { products } = useParams();
   const orders = useSelector((state) => state.auth.me.orders);
   const me = useSelector((state) => state.auth.me);
-
   let quantity = 1;
 
-  let productNameMap = {};
-  console.log("cart cart", cart);
-  cart && cart.length > 0
-    ? cart.map((product) => {
-        productNameMap[productId] = product.name;
-      })
-    : null;
-  console.log("productNameMap", productNameMap);
-
-  const handleIncrement = (orderId, productId, quantity) => {
+  const handleIncrement = async (orderId, productId, quantity) => {
     let newQuantity = quantity + 1;
-    editCartAsync(orderId, productId, newQuantity);
+    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
   };
 
-  const handleDecrement = (orderId, productId, quantity) => {
+  const handleDecrement = async (orderId, productId, quantity) => {
     let newQuantity = quantity - 1;
-    editCartAsync(orderId, productId, newQuantity);
+    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
   };
 
-  const handleDelete = async (event) => {
-    event.preventDefault();
-    deleteFromCartAsync(orderId, productId);
+  const handleDelete = async () => {
+    await dispatch(deleteFromCartAsync(productId));
   };
 
   useEffect(() => {
@@ -81,41 +70,31 @@ const Review = () => {
                         aria-label="small outlined button group"
                       >
                         <Button
-                          onClick={() =>
-                            handleIncrement(
-                              cart.orderId,
-                              cart.productId,
-                              cart.quantity
-                            )
-                          }
+                          onClick={() => {
+                            handleIncrement();
+                          }}
                         >
                           +
                         </Button>
-                        {
-                          <Button disabled>
-                            {CardTravelOutlined.quantity}
-                          </Button>
-                        }
+                        {<Button disabled>{quantity}</Button>}
                         {
                           <Button
                             onClick={() =>
-                              handleDecrement(
-                                cart.orderId,
-                                cart.productId,
-                                cart.quantity
-                              )
+                              handleDecrement({ orderId, productId, quantity })
                             }
                           >
                             -
                           </Button>
                         }
-                        <Button onClick={() => handleDelete(cart.products.id)}>
+                        <Button
+                          onClick={() => handleDelete({ userId, productId })}
+                        >
                           Delete
                         </Button>
                       </ButtonGroup>
                     }
                   />
-                  <Typography variant="body2">${cart.totalPrice}</Typography>
+                  <Typography variant="body2">${products.price}</Typography>
                 </ListItem>
               );
             })}
