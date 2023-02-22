@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-export default function PaymentForm() {
+const PaymentForm = () => {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -62,4 +62,6 @@ export default function PaymentForm() {
       </Grid>
     </React.Fragment>
   );
-}
+};
+
+export default PaymentForm;

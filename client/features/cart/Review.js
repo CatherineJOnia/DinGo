@@ -61,104 +61,88 @@ const Review = () => {
   }, [dispatch]);
 
   return (
-    <div className="loadingDiv">
-      {/* {this.loading ? (
-          CircularLoading()
-      ) : ( */}
-      <div className="cartReviewDiv">
-        {cart.length === 0 ? (
-          "Your cart is empty. Check out our Products page to find your perfect DinGo!"
-        ) : (
-          // <Typography variant="h6" gutterBottom>
-          //   <Link to="/products">
-          //     Your cart is empty. Check out our Products page to find your
-          //     perfect room!
-          //   </Link>
-          // </Typography>
-          <React.Fragment>
-            <Typography variant="h6" gutterBottom>
-              Order summary
-            </Typography>
-            <List disablePadding>
-              {cart && cart.length
-                ? cart.map((orderRow) => {
-                    <ListItem
-                      key={orderRow.orderId + orderRow.productId}
-                      sx={{ py: 1, px: 0 }}
-                    >
-                      <ListItemText
-                        primary={productNameMap[orderRow.productId]}
-                        secondary={
-                          <ButtonGroup
-                            size="small"
-                            aria-label="small outlined button group"
+    <div className="cartReviewDiv">
+      {cart.length === 0 ? (
+        "Your cart is empty. Check out our Products page to find your perfect DinGo!"
+      ) : (
+        <React.Fragment>
+          <Typography variant="h6" gutterBottom>
+            Order summary
+          </Typography>
+          <List disablePadding>
+            {cart && cart.length
+              ? cart.map((orderRow) => {
+                  <ListItem
+                    key={orderRow.orderId + orderRow.productId}
+                    sx={{ py: 1, px: 0 }}
+                  >
+                    <ListItemText
+                      primary={productNameMap[orderRow.productId]}
+                      secondary={
+                        <ButtonGroup
+                          size="small"
+                          aria-label="small outlined button group"
+                        >
+                          <Button
+                            onClick={() =>
+                              handleIncrement(
+                                orderRow.orderId,
+                                orderRow.productId,
+                                orderRow.quantity
+                              )
+                            }
                           >
+                            +
+                          </Button>
+                          {<Button disabled>{orderRow.quantity}</Button>}
+                          {
                             <Button
                               onClick={() =>
-                                handleIncrement(
+                                handleDecrement(
                                   orderRow.orderId,
                                   orderRow.productId,
                                   orderRow.quantity
                                 )
                               }
                             >
-                              +
+                              -
                             </Button>
-                            {<Button disabled>{orderRow.quantity}</Button>}
-                            {
-                              <Button
-                                onClick={() =>
-                                  handleDecrement(
-                                    orderRow.orderId,
-                                    orderRow.productId,
-                                    orderRow.quantity
-                                  )
-                                }
-                              >
-                                -
-                              </Button>
-                            }
-                            <Button onClick={() => handleDelete(orderRow)}>
-                              Delete
-                            </Button>
-                          </ButtonGroup>
-                        }
-                      />
-                      <Typography variant="body2">
-                        ${orderRow.totalPrice}
-                      </Typography>
-                    </ListItem>;
-                  })
-                : null}
+                          }
+                          <Button onClick={() => handleDelete(orderRow)}>
+                            Delete
+                          </Button>
+                        </ButtonGroup>
+                      }
+                    />
+                    <Typography variant="body2">
+                      ${orderRow.totalPrice}
+                    </Typography>
+                  </ListItem>;
+                })
+              : null}
 
-              <ListItem sx={{ py: 1, px: 0 }}>
-                <ListItemText primary="Total" />
-                <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                  ${cart.orderTotal}
-                </Typography>
-              </ListItem>
-            </List>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
-                  Shipping To:
-                </Typography>
-                <Typography gutterBottom>
-                  {auth.me.firstName} {auth.me.lastName}
-                </Typography>
-              </Grid>
-              <Grid item container direction="column" xs={12} sm={6}>
-                <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ mt: 2 }}
-                ></Typography>
-              </Grid>
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary="Total" />
+              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                ${cart.orderTotal}
+              </Typography>
+            </ListItem>
+          </List>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+                Shipping To:
+              </Typography>
+              <Typography gutterBottom>
+                {auth.me.firstName} {auth.me.lastName}
+              </Typography>
             </Grid>
-          </React.Fragment>
-        )}
-      </div>
-      {/* ) */}
+            <Grid item container direction="column" xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}></Typography>
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      )}
     </div>
   );
 };

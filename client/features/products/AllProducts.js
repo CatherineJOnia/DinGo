@@ -1,20 +1,16 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import ProductCard from "./ProductCard";
+import ProductCarousel from "./ProductCarousel";
 import {
   fetchProductsAsync,
   deleteProductAsync,
   productList,
 } from "./productsSlice";
-// import { addProduct } from "../store/singleProductSlice";
-import { Link } from "react-router-dom";
-import ProductCard from "./ProductCard";
-import ProductCarousel from "./ProductCarousel";
 
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Pagination, Typography, Stack } from "@mui/material";
-// import CircularLoading from "./CircularLoading";
+import { Pagination, Typography, Stack, Container, Grid } from "@mui/material";
 
 const AllProducts = () => {
   const dispatch = useDispatch();
