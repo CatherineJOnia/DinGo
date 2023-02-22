@@ -5,6 +5,9 @@ Get Started
 Download DinGo into your local drive:
 
 -npm install
+
 -createdb dingo
+
 -npm run seed
+
 -npm run start:dev
