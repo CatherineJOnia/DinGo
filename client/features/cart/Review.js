@@ -23,7 +23,6 @@ const Review = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.me.id);
   const cart = useSelector(selectCart);
-  const auth = useSelector((state) => state.auth);
   const { orderId } = useParams();
   const { productId } = useParams();
   const { products } = useParams();
@@ -59,9 +58,9 @@ const Review = () => {
             Order summary
           </Typography>
           <List disablePadding>
-            {cart.map((products) => {
+            {cart.map((products, index) => {
               return (
-                <ListItem key={products} sx={{ py: 1, px: 0 }}>
+                <ListItem key={index} sx={{ py: 1, px: 0 }}>
                   <ListItemText
                     primary={products.name}
                     secondary={
@@ -112,11 +111,8 @@ const Review = () => {
                 Shipping To:
               </Typography>
               <Typography gutterBottom>
-                {auth.me.firstName} {auth.me.lastName}
+                {me.firstName} {me.lastName}
               </Typography>
-            </Grid>
-            <Grid item container direction="column" xs={12} sm={6}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}></Typography>
             </Grid>
           </Grid>
         </React.Fragment>
