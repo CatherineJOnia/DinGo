@@ -17,6 +17,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import { FormControl, InputLabel, NativeSelect } from "@mui/material";
+import { CardTravelOutlined, CardTravelSharp } from "@mui/icons-material";
 
 const Review = () => {
   const dispatch = useDispatch();
@@ -32,14 +33,13 @@ const Review = () => {
   let quantity = 1;
 
   let productNameMap = {};
-  {
-    console.log("cart cart", cart);
-    cart && cart.length > 0
-      ? cart.map((product) => {
-          productNameMap[productId] = product.name;
-        })
-      : null;
-  }
+  console.log("cart cart", cart);
+  cart && cart.length > 0
+    ? cart.map((product) => {
+        productNameMap[productId] = product.name;
+      })
+    : null;
+  console.log("productNameMap", productNameMap);
 
   const handleIncrement = (orderId, productId, quantity) => {
     let newQuantity = quantity + 1;
@@ -70,56 +70,55 @@ const Review = () => {
             Order summary
           </Typography>
           <List disablePadding>
-            {cart && cart.length
-              ? cart.map((orderRow) => {
-                  <ListItem
-                    key={orderRow.orderId + orderRow.productId}
-                    sx={{ py: 1, px: 0 }}
-                  >
-                    <ListItemText
-                      primary={productNameMap[orderRow.productId]}
-                      secondary={
-                        <ButtonGroup
-                          size="small"
-                          aria-label="small outlined button group"
+            {cart.map((products) => {
+              return (
+                <ListItem key={products} sx={{ py: 1, px: 0 }}>
+                  <ListItemText
+                    primary={products.name}
+                    secondary={
+                      <ButtonGroup
+                        size="small"
+                        aria-label="small outlined button group"
+                      >
+                        <Button
+                          onClick={() =>
+                            handleIncrement(
+                              cart.orderId,
+                              cart.productId,
+                              cart.quantity
+                            )
+                          }
                         >
+                          +
+                        </Button>
+                        {
+                          <Button disabled>
+                            {CardTravelOutlined.quantity}
+                          </Button>
+                        }
+                        {
                           <Button
                             onClick={() =>
-                              handleIncrement(
-                                orderRow.orderId,
-                                orderRow.productId,
-                                orderRow.quantity
+                              handleDecrement(
+                                cart.orderId,
+                                cart.productId,
+                                cart.quantity
                               )
                             }
                           >
-                            +
+                            -
                           </Button>
-                          {<Button disabled>{orderRow.quantity}</Button>}
-                          {
-                            <Button
-                              onClick={() =>
-                                handleDecrement(
-                                  orderRow.orderId,
-                                  orderRow.productId,
-                                  orderRow.quantity
-                                )
-                              }
-                            >
-                              -
-                            </Button>
-                          }
-                          <Button onClick={() => handleDelete(orderRow)}>
-                            Delete
-                          </Button>
-                        </ButtonGroup>
-                      }
-                    />
-                    <Typography variant="body2">
-                      ${orderRow.totalPrice}
-                    </Typography>
-                  </ListItem>;
-                })
-              : null}
+                        }
+                        <Button onClick={() => handleDelete(cart.products.id)}>
+                          Delete
+                        </Button>
+                      </ButtonGroup>
+                    }
+                  />
+                  <Typography variant="body2">${cart.totalPrice}</Typography>
+                </ListItem>
+              );
+            })}
 
             <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary="Total" />

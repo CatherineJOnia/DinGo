@@ -64,7 +64,7 @@ const Checkout = () => {
 
   const handleNext = async (event) => {
     event.preventDefault();
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       setActiveStep(activeStep + 1);
     } else {
       alert("Please sign in to Checkout!");
