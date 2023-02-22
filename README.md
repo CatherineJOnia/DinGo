@@ -1,7 +1,7 @@
 # DinGo
 An e-commerce website to buy beautiful Dinner on the Go!  Because Dinner should be easy. 
 
-Get Started
+# Get Started
 Download DinGo into your local drive:
 
 -npm install
