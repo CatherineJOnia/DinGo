@@ -11,7 +11,7 @@ const Header = (props) => {
         {name ? <h2>Indulge, {name}.</h2> : <h2>Indulge.</h2>}
         <Link to="/products">
           <center>
-            <button>Shop All</button>
+            <button>Shop Now</button>
           </center>
         </Link>
       </div>

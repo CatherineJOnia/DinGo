@@ -32,6 +32,8 @@ const ProductCarousel = () => {
     dispatch(fetchFeaturedProducts());
   }, [dispatch]);
 
+  console.log("featuredProducts carousel", featuredProducts);
+
   return (
     <Carousel>
       {featuredProducts && featuredProducts.length

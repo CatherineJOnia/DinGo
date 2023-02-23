@@ -133,7 +133,7 @@ const products = [
     imageUrl: "/images/bento1.png",
   },
   {
-    name: "Sushi and Tempura Pairing",
+    name: "Sushi and Tempura",
     price: 30,
     description:
       "Tempura shrimp with fresh salmon nigiri, spicy tuna roll, and accoutrements",
@@ -187,7 +187,7 @@ const products = [
     imageUrl: "/images/bento10.png",
   },
   {
-    name: "Katsu Chicken Bento",
+    name: "Katsu Chicken",
     price: 25,
     description:
       "Crispy panko-fried chicken, salad, and rice in fun character shapes.",

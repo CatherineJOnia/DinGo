@@ -64,7 +64,7 @@ const ProductCard = ({
               variant="contained"
               color="primary"
             >
-              View More
+              View Details
             </Button>
           </CardActions>
         </CardActionArea>
