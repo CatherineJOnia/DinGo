@@ -6,7 +6,6 @@ export const fetchFeaturedProducts = createAsyncThunk(
   async () => {
     try {
       const { data } = await axios.get(`/api/featuredProducts`);
-      console.log("featuredProducts data", data);
       return data;
     } catch (err) {
       console.log("An error occurred in the fetchFeaturedProducts thunk!", err);
