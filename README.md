@@ -7,11 +7,10 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 ## Features
 
 - Login authentication
-- Administrative controls
+- Administrative control over products
 - Modifiable cart
 - Pagination
 - Featured product carousel
-- Detailed product pages
 
 
 ## Tech Stack
