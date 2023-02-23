@@ -7,6 +7,7 @@ import AllProducts from "../features/products/AllProducts";
 import SingleProduct from "../features/products/SingleProduct";
 import AddProduct from "../features/admin/AddProduct";
 import EditSingleProduct from "../features/admin/EditSingleProduct";
+import UserData from "../features/users/UserData";
 import Checkout from "../features/cart/Checkout";
 import Review from "../features/cart/Review";
 
@@ -38,6 +39,8 @@ const AppRoutes = () => {
           path="/products/:productId/edit"
           element={<EditSingleProduct />}
         />
+
+        <Route path="/users" element={<UserData />} />
 
         <Route path="/cart" element={<Checkout />} />
         <Route path="/cart/guest" element={<Checkout />} />

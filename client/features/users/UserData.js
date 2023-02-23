@@ -5,8 +5,8 @@ import { editSingleUserAsync, deleteSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
-import { DeleteIcon } from "@mui/icons-material/Delete";
-import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { IconButton, Button } from "@mui/material";
 
 const theme = createTheme({
   typography: {
@@ -81,10 +81,10 @@ const UserData = () => {
   const rows = users.map((user) => ({
     id: user.id,
     col1: user.id,
-    col2: user.first_name,
-    col3: user.last_name,
-    col4: user.email_address,
-    col5: user.is_admin ? "Admin" : "Not Admin",
+    col2: user.firstName,
+    col3: user.lastName,
+    col4: user.email,
+    col5: user.isAdmin ? "Admin" : "Not Admin",
     col6: user.id,
     col7: user.id,
   }));
