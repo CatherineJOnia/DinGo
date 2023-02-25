@@ -58,7 +58,7 @@ router.delete("/:productId", async (req, res, next) => {
     const deletedProduct = await Cart.destroy({
       where: { productId: req.params.productId },
     });
-    res.json(deletedProduct);
+    res.send(deletedProduct);
   } catch (err) {
     next(err);
   }
