@@ -23,12 +23,14 @@ const Review = () => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.auth.me.id);
   const cart = useSelector(selectCart);
+  const me = useSelector((state) => state.auth.me);
+
   const { orderId } = useParams();
   const { productId } = useParams();
-  const { products } = useParams();
-  const orders = useSelector((state) => state.auth.me.orders);
-  const me = useSelector((state) => state.auth.me);
-  let quantity = 1;
+
+  const [subtotal, setSubtotal] = useState(0);
+  const [tax, setTax] = useState(0);
+  const [orderTotal, setOrderTotal] = useState(0);
 
   const handleIncrement = async (orderId, productId, quantity) => {
     let newQuantity = quantity + 1;
@@ -44,6 +46,34 @@ const Review = () => {
     await dispatch(deleteFromCartAsync(productId));
   };
 
+  const calculateSubtotal = () => {
+    var total = 0;
+    for (var product of cart) {
+      console.log("product", product);
+      total += Number(product.price) * product.cart.quantity;
+    }
+    setSubtotal(total);
+  };
+
+  const calculateTax = () => {
+    var tax = 0;
+    tax += Number(subtotal) * 0.07;
+    setTax((Math.round(tax * 100) / 100).toFixed(2));
+  };
+
+  const calculateTotal = () => {
+    var total = 0;
+    total += Number(subtotal);
+    total += Number(tax);
+    setOrderTotal((Math.round(total * 100) / 100).toFixed(2));
+  };
+
+  useEffect(() => {
+    calculateSubtotal();
+    calculateTax();
+    calculateTotal();
+  }, [handleIncrement, handleDecrement, handleDelete]);
+
   useEffect(() => {
     dispatch(fetchOrderAsync(userId));
   }, [dispatch]);
@@ -58,11 +88,11 @@ const Review = () => {
             Order summary
           </Typography>
           <List disablePadding>
-            {cart.map((products, index) => {
+            {cart.map((product, index) => {
               return (
                 <ListItem key={index} sx={{ py: 1, px: 0 }}>
                   <ListItemText
-                    primary={products.name}
+                    primary={product.name}
                     secondary={
                       <ButtonGroup
                         size="small"
@@ -75,16 +105,8 @@ const Review = () => {
                         >
                           +
                         </Button>
-                        {<Button disabled>{quantity}</Button>}
-                        {
-                          <Button
-                            onClick={() =>
-                              handleDecrement({ orderId, productId, quantity })
-                            }
-                          >
-                            -
-                          </Button>
-                        }
+                        {<Button disabled>{product.cart.quantity}</Button>}
+                        {<Button onClick={() => handleDecrement()}>-</Button>}
                         <Button
                           onClick={() => handleDelete({ userId, productId })}
                         >
@@ -93,15 +115,35 @@ const Review = () => {
                       </ButtonGroup>
                     }
                   />
-                  <Typography variant="body2">${products.price}</Typography>
+                  <Typography variant="body2">
+                    ${product.cart.totalPrice}
+                  </Typography>
                 </ListItem>
               );
             })}
 
             <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary="Subtotal" />
+              <Typography variant="subtitle1" sx={{ mt: 2 }}>
+                ${subtotal}
+              </Typography>
+            </ListItem>
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary="Tax" />
+              <Typography variant="subtitle1" sx={{ mt: 2 }}>
+                ${tax}
+              </Typography>
+            </ListItem>
+            <ListItem sx={{ py: 1, px: 0 }}>
+              <ListItemText primary="Shipping" />
+              <Typography variant="subtitle1" sx={{ mt: 2 }}>
+                FREE
+              </Typography>
+            </ListItem>
+            <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary="Total" />
               <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                ${cart.orderTotal}
+                ${orderTotal}
               </Typography>
             </ListItem>
           </List>
