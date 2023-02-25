@@ -79,11 +79,9 @@ export const createOrderAsync = createAsyncThunk(
 
 export const deleteFromCartAsync = createAsyncThunk(
   "cart/deleteFromCart",
-  async (id, product) => {
+  async (productId) => {
     try {
-      const { data } = await axios.delete(`/api/cart/${id}`, {
-        product,
-      });
+      const { data } = await axios.delete(`/api/cart/${productId}`);
       return data;
     } catch (err) {
       console.log("An error occurred in the deleteFromCart thunk!", err);

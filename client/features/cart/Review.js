@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   deleteFromCartAsync,
   fetchOrderAsync,
@@ -8,6 +8,8 @@ import {
   updateItemQuantityAsync,
   selectCart,
 } from "./cartSlice";
+
+import { selectSingleProduct } from "../products/singleProductSlice";
 
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
@@ -21,12 +23,16 @@ import { CardTravelOutlined, CardTravelSharp } from "@mui/icons-material";
 
 const Review = () => {
   const dispatch = useDispatch();
-  const userId = useSelector((state) => state.auth.me.id);
-  const cart = useSelector(selectCart);
-  const me = useSelector((state) => state.auth.me);
+  const navigate = useNavigate();
 
-  const { orderId } = useParams();
-  const { productId } = useParams();
+  const me = useSelector((state) => state.auth.me);
+  const userId = useSelector((state) => state.auth.me.id);
+
+  const cart = useSelector(selectCart);
+
+  const order = useSelector((state) => state.auth.me.orders);
+  const orderId = useSelector((state) => state.cart.id);
+  const productId = useSelector((state) => state.cart.productId);
 
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
@@ -42,8 +48,14 @@ const Review = () => {
     await dispatch(editCartAsync({ orderId, productId, newQuantity }));
   };
 
+  // console.log("me", me);
+  // console.log("order", order);
+  // console.log("productId", productId);
+  // console.log("orderId", orderId);
+  // console.log("cart", cart);
+
   const handleDelete = async () => {
-    await dispatch(deleteFromCartAsync(productId));
+    await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
 
   const calculateSubtotal = () => {
@@ -81,7 +93,7 @@ const Review = () => {
 
   return (
     <div className="cartReviewDiv">
-      {cart && cart.length === 0 ? (
+      {cart.length === 0 ? (
         "Your cart is empty. Check out our Products page to find your perfect DinGo!"
       ) : (
         <React.Fragment>
@@ -113,7 +125,14 @@ const Review = () => {
                         }
                         {<Button onClick={() => handleDecrement()}>-</Button>}
                         <Button
-                          onClick={() => handleDelete({ userId, productId })}
+                          onClick={async (evt) => {
+                            evt.preventDefault();
+                            await dispatch(
+                              deleteFromCartAsync(product.cart.productId)
+                            );
+                            alert("DinGo Deleted!");
+                            dispatch(navigate("/cart"));
+                          }}
                         >
                           Delete
                         </Button>
