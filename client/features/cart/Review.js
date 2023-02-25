@@ -49,8 +49,9 @@ const Review = () => {
   const calculateSubtotal = () => {
     var total = 0;
     for (var product of cart) {
-      console.log("product", product);
-      total += Number(product.price) * product.cart.quantity;
+      product.cart
+        ? (total += Number(product.price) * product.cart.quantity)
+        : null;
     }
     setSubtotal(total);
   };
@@ -105,7 +106,11 @@ const Review = () => {
                         >
                           +
                         </Button>
-                        {<Button disabled>{product.cart.quantity}</Button>}
+                        {
+                          <Button disabled>
+                            {product.cart ? product.cart.quantity : "1"}
+                          </Button>
+                        }
                         {<Button onClick={() => handleDecrement()}>-</Button>}
                         <Button
                           onClick={() => handleDelete({ userId, productId })}
@@ -116,7 +121,7 @@ const Review = () => {
                     }
                   />
                   <Typography variant="body2">
-                    ${product.cart.totalPrice}
+                    ${product.cart ? product.cart.totalPrice : "Free"}
                   </Typography>
                 </ListItem>
               );

@@ -8,7 +8,7 @@ export const fetchCartProductAsync = createAsyncThunk(
       const { data } = await axios.get(`/api/cart/${userId}/${productId}`);
       return data;
     } catch (error) {
-      console.log(error);
+      console.log("An error occured in the fetchCart thunk!", error);
     }
   }
 );
@@ -22,7 +22,7 @@ export const updateCartProductAsync = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      console.log(error);
+      console.log("An error occured in the updateCartProduct thunk!", error);
     }
   }
 );
