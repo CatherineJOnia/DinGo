@@ -127,11 +127,14 @@ const Review = () => {
                         <Button
                           onClick={async (evt) => {
                             evt.preventDefault();
+                            console.log(
+                              "product.cart.productId",
+                              product.cart.productId
+                            );
                             await dispatch(
                               deleteFromCartAsync(product.cart.productId)
                             );
-                            alert("DinGo Deleted!");
-                            dispatch(navigate("/cart"));
+                            dispatch(fetchOrderAsync(userId));
                           }}
                         >
                           Delete
