@@ -81,7 +81,7 @@ const Review = () => {
 
   return (
     <div className="cartReviewDiv">
-      {cart.length === 0 ? (
+      {cart && cart.length === 0 ? (
         "Your cart is empty. Check out our Products page to find your perfect DinGo!"
       ) : (
         <React.Fragment>
@@ -93,7 +93,7 @@ const Review = () => {
               return (
                 <ListItem key={index} sx={{ py: 1, px: 0 }}>
                   <ListItemText
-                    primary={product.name}
+                    primary={product ? product.name : null}
                     secondary={
                       <ButtonGroup
                         size="small"
