@@ -67,7 +67,6 @@ nav a:hover {
   opacity: 0.75;
 }
 
-/* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #5b7b7a;
   color: #fff;
@@ -75,10 +74,8 @@ nav a:hover {
   opacity: 1;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
-  /* To be revisited by Maxiel */
   position: fixed;
   z-index: 100;
   margin-right: 8px;

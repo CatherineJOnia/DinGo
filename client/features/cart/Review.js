@@ -126,6 +126,7 @@ const Review = () => {
                 </ListItem>
               );
             })}
+            <hr />
 
             <ListItem sx={{ py: 1, px: 0 }}>
               <ListItemText primary="Subtotal" />
@@ -146,15 +147,17 @@ const Review = () => {
               </Typography>
             </ListItem>
             <ListItem sx={{ py: 1, px: 0 }}>
-              <ListItemText primary="Total" />
-              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+              <ListItemText primary="Total" variant="h6" />
+              <Typography variant="h6" sx={{ fontWeight: 700 }}>
                 ${orderTotal}
               </Typography>
             </ListItem>
           </List>
+          <hr />
+
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Typography variant="h6" gutterBottom sx={{ mt: 2 }}>
+              <Typography variant="h6" gutterBottom>
                 Shipping To:
               </Typography>
               <Typography gutterBottom>
