@@ -7,6 +7,8 @@ import {
   editCartAsync,
   updateItemQuantityAsync,
   selectCart,
+  increase,
+  decrease,
 } from "./cartSlice";
 
 import { selectSingleProduct } from "../products/singleProductSlice";
@@ -29,24 +31,36 @@ const Review = () => {
   const userId = useSelector((state) => state.auth.me.id);
 
   const cart = useSelector(selectCart);
+  const quantity = useSelector((state) => state.cart.quantity);
 
   const order = useSelector((state) => state.auth.me.orders);
-  const orderId = useSelector((state) => state.cart.id);
-  const productId = useSelector((state) => state.cart.productId);
 
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
 
-  const handleIncrement = async (orderId, productId, quantity) => {
-    let newQuantity = quantity + 1;
-    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
+  // const [quantity, setQuantity] = useState(1);
+
+  // const handleIncrement = async () => {
+  //   console.log("productId", productId);
+  //   console.log("orderId", orderId);
+  //   console.log("quantity", quantity);
+  //   setQuantity(quantity++);
+  //   await dispatch(editCartAsync({ orderId, productId, quantity }));
+  // };
+
+  const increment = (product) => {
+    dispatch(increase(product));
   };
 
-  const handleDecrement = async (orderId, productId, quantity) => {
-    let newQuantity = quantity - 1;
-    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
+  const decrement = (product) => {
+    dispatch(decrease(product));
   };
+
+  // const handleDecrement = async (orderId, productId, quantity) => {
+  //   setQuantity(quantity--);
+  //   await dispatch(editCartAsync({ orderId, productId, quantity }));
+  // };
 
   // console.log("me", me);
   // console.log("order", order);
@@ -85,7 +99,7 @@ const Review = () => {
     calculateSubtotal();
     calculateTax();
     calculateTotal();
-  }, [handleIncrement, handleDecrement, handleDelete]);
+  }, [handleDelete]);
 
   useEffect(() => {
     dispatch(fetchOrderAsync(userId));
@@ -93,7 +107,7 @@ const Review = () => {
 
   return (
     <div className="cartReviewDiv">
-      {cart.length === 0 ? (
+      {cart && cart.length === 0 ? (
         "Your cart is empty. Check out our Products page to find your perfect DinGo!"
       ) : (
         <React.Fragment>
@@ -113,24 +127,36 @@ const Review = () => {
                       >
                         <Button
                           onClick={() => {
-                            handleIncrement();
+                            dispatch({
+                              type: "cart/increase",
+                              payload: product.cart.quantity,
+                            });
+                            dispatch(fetchOrderAsync(userId));
                           }}
                         >
                           +
                         </Button>
+
                         {
                           <Button disabled>
                             {product.cart ? product.cart.quantity : "1"}
                           </Button>
                         }
-                        {<Button onClick={() => handleDecrement()}>-</Button>}
+
+                        {
+                          <Button
+                            onClick={() => {
+                              dispatch(decrement(product.cart.quantity));
+                              dispatch(fetchOrderAsync(userId));
+                            }}
+                          >
+                            -
+                          </Button>
+                        }
+
                         <Button
                           onClick={async (evt) => {
                             evt.preventDefault();
-                            console.log(
-                              "product.cart.productId",
-                              product.cart.productId
-                            );
                             await dispatch(
                               deleteFromCartAsync(product.cart.productId)
                             );

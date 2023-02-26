@@ -38,9 +38,9 @@ export const addToCartAsync = createAsyncThunk(
 
 export const editCartAsync = createAsyncThunk(
   "cart/editCart",
-  async ({ id, quantity }) => {
+  async ({ orderId, productId, quantity }) => {
     try {
-      const { data } = await axios.put(`/api/cart/${id}`, {
+      const { data } = await axios.put(`/api/cart/${orderId}/${productId}`, {
         quantity,
       });
       return data;
@@ -93,13 +93,17 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState: [],
   reducers: {
-    increase: (state, payload) => {
-      const cart = state.filter((item) => item.id === payload.id);
-      cart.itemCount = cart.itemCount + 1;
+    increase: (state, action) => {
+      const product = state.filter(
+        (product) => product.cart.id === action.payload.id
+      );
+      state.push(action.payload++);
     },
-    decrease: (state, payload) => {
-      const cart = state.filter((item) => item.id === payload.id);
-      cart.itemCount = cart.itemCount - 1;
+    decrease(state, action) {
+      const product = state.filter(
+        (product) => product.cart.id === action.payload.id
+      );
+      state.cart.product.cart.quantity = action.payload--;
     },
   },
   extraReducers: (builder) => {

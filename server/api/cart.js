@@ -25,6 +25,21 @@ router.put("/cart", async (req, res, next) => {
   }
 });
 
+router.put("/:orderId/:productId", async (req, res, next) => {
+  try {
+    const productInCart = await Cart.findOne({
+      where: {
+        orderId: req.params.orderId,
+        productId: req.params.productId,
+      },
+      include: [Product],
+    });
+    res.send(await productInCart.update(req.body));
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/addToCart/:userId/:productId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
