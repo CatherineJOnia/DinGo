@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import socket from "../../app/socket";
 
 export const fetchProductsAsync = createAsyncThunk(
   "products/fetchAll",
@@ -24,6 +25,7 @@ export const addProductAsync = createAsyncThunk(
         description,
         imageUrl,
       });
+      socket.emit("/products/addProduct", data);
       return data;
     } catch (err) {
       console.log("An error occurred in the addProduct thunk!", err);
@@ -36,6 +38,7 @@ export const deleteProductAsync = createAsyncThunk(
   async ({ productId }) => {
     try {
       const { data } = await axios.delete(`/api/products/${productId}`);
+      socket.emit("/products/deleteProduct", productId);
       return data;
     } catch (err) {
       console.log("An error occurred in the deleteProduct thunk!", err);

@@ -7,6 +7,8 @@ import {
   editCartAsync,
   updateItemQuantityAsync,
   selectCart,
+  increase,
+  decrease,
 } from "./cartSlice";
 
 import { selectSingleProduct } from "../products/singleProductSlice";
@@ -29,30 +31,31 @@ const Review = () => {
   const userId = useSelector((state) => state.auth.me.id);
 
   const cart = useSelector(selectCart);
+  const product = useSelector((state) => state.cart.product);
+  // let quantity = useSelector((state) => state.cart.quantity);
 
   const order = useSelector((state) => state.auth.me.orders);
-  const orderId = useSelector((state) => state.cart.id);
-  const productId = useSelector((state) => state.cart.productId);
 
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const handleIncrement = async (orderId, productId, quantity) => {
-    let newQuantity = quantity + 1;
-    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
+    setQuantity(quantity++);
+    await dispatch(editCartAsync({ orderId, productId, quantity }));
+    dispatch(fetchOrderAsync(userId));
   };
+
+  // const decrement = (product) => {
+  //   dispatch(decrease(product));
+  // };
 
   const handleDecrement = async (orderId, productId, quantity) => {
-    let newQuantity = quantity - 1;
-    await dispatch(editCartAsync({ orderId, productId, newQuantity }));
+    setQuantity(quantity--);
+    await dispatch(editCartAsync({ orderId, productId, quantity }));
+    dispatch(fetchOrderAsync(userId));
   };
-
-  // console.log("me", me);
-  // console.log("order", order);
-  // console.log("productId", productId);
-  // console.log("orderId", orderId);
-  // console.log("cart", cart);
 
   const handleDelete = async () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
@@ -93,7 +96,7 @@ const Review = () => {
 
   return (
     <div className="cartReviewDiv">
-      {cart.length === 0 ? (
+      {cart && cart.length === 0 ? (
         "Your cart is empty. Check out our Products page to find your perfect DinGo!"
       ) : (
         <React.Fragment>
@@ -112,25 +115,42 @@ const Review = () => {
                         aria-label="small outlined button group"
                       >
                         <Button
-                          onClick={() => {
-                            handleIncrement();
+                          onClick={async () => {
+                            handleIncrement(
+                              product.cart.orderId,
+                              product.cart.productId,
+                              product.cart.quantity
+                            );
                           }}
                         >
                           +
                         </Button>
+
                         {
                           <Button disabled>
                             {product.cart ? product.cart.quantity : "1"}
                           </Button>
                         }
-                        {<Button onClick={() => handleDecrement()}>-</Button>}
+
+                        {
+                          <Button
+                            onClick={async () => {
+                              dispatch(
+                                handleDecrement(
+                                  product.cart.orderId,
+                                  product.cart.productId,
+                                  product.cart.quantity
+                                )
+                              );
+                            }}
+                          >
+                            -
+                          </Button>
+                        }
+
                         <Button
                           onClick={async (evt) => {
                             evt.preventDefault();
-                            console.log(
-                              "product.cart.productId",
-                              product.cart.productId
-                            );
                             await dispatch(
                               deleteFromCartAsync(product.cart.productId)
                             );

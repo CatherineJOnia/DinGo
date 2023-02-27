@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import socket from "../../app/socket";
 
 export const fetchCartAsync = createAsyncThunk("cart/fetchCart", async () => {
   try {
@@ -29,6 +30,7 @@ export const addToCartAsync = createAsyncThunk(
       const { data } = await axios.put(
         `/api/cart/addToCart/${userId}/${productId}`
       );
+      socket.emit("cart/addProduct", data);
       return data;
     } catch (err) {
       console.log("An error occurred in the addToCart thunk!", err);
@@ -38,11 +40,12 @@ export const addToCartAsync = createAsyncThunk(
 
 export const editCartAsync = createAsyncThunk(
   "cart/editCart",
-  async ({ id, quantity }) => {
+  async ({ orderId, productId, quantity }) => {
     try {
-      const { data } = await axios.put(`/api/cart/${id}`, {
+      const { data } = await axios.put(`/api/cart/${orderId}/${productId}`, {
         quantity,
       });
+      socket.emit("cart/editProduct", productId, quantity);
       return data;
     } catch (err) {
       console.log("An error occurred in the editCart thunk!", err);
@@ -82,6 +85,7 @@ export const deleteFromCartAsync = createAsyncThunk(
   async (productId) => {
     try {
       const { data } = await axios.delete(`/api/cart/${productId}`);
+      socket.emit("cart/deleteProduct", data);
       return data;
     } catch (err) {
       console.log("An error occurred in the deleteFromCart thunk!", err);
@@ -92,16 +96,7 @@ export const deleteFromCartAsync = createAsyncThunk(
 export const cartSlice = createSlice({
   name: "cart",
   initialState: [],
-  reducers: {
-    increase: (state, payload) => {
-      const cart = state.filter((item) => item.id === payload.id);
-      cart.itemCount = cart.itemCount + 1;
-    },
-    decrease: (state, payload) => {
-      const cart = state.filter((item) => item.id === payload.id);
-      cart.itemCount = cart.itemCount - 1;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchCartAsync.fulfilled, (state, action) => {
       return action.payload;
@@ -113,7 +108,7 @@ export const cartSlice = createSlice({
       state.push(action.payload);
     });
     builder.addCase(editCartAsync.fulfilled, (state, action) => {
-      return action.payload;
+      return [state];
     });
     builder.addCase(deleteFromCartAsync.fulfilled, (state, action) => {
       return state.filter((product) => product.productId != action.payload);
