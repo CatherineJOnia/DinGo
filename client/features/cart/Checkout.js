@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-const steps = ["Review your order", "Shipping address", "Payment details"];
+const steps = ["Review Your Order", "Shipping Address", "Payment Details"];
 
 const theme = createTheme({
   typography: {
