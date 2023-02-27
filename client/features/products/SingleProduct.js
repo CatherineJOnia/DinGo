@@ -2,7 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { deleteProductAsync } from "../products/productsSlice";
-import { fetchSingleProduct, selectSingleProduct } from "./singleProductSlice";
+import {
+  fetchSingleProductAsync,
+  selectSingleProduct,
+} from "./singleProductSlice";
 import { addToCartAsync } from "../cart/cartSlice";
 
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -22,7 +25,7 @@ const SingleProduct = () => {
   const userId = user.id;
 
   useEffect(() => {
-    dispatch(fetchSingleProduct(productId));
+    dispatch(fetchSingleProductAsync(productId));
   }, [dispatch]);
 
   return (

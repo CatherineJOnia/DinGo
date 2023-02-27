@@ -31,6 +31,7 @@ const Review = () => {
   const userId = useSelector((state) => state.auth.me.id);
 
   const cart = useSelector(selectCart);
+  const product = useSelector((state) => state.cart.product);
   // let quantity = useSelector((state) => state.cart.quantity);
 
   const order = useSelector((state) => state.auth.me.orders);
@@ -43,6 +44,7 @@ const Review = () => {
   const handleIncrement = async (orderId, productId, quantity) => {
     setQuantity(quantity++);
     await dispatch(editCartAsync({ orderId, productId, quantity }));
+    dispatch(fetchOrderAsync(userId));
   };
 
   // const decrement = (product) => {
@@ -52,6 +54,7 @@ const Review = () => {
   const handleDecrement = async (orderId, productId, quantity) => {
     setQuantity(quantity--);
     await dispatch(editCartAsync({ orderId, productId, quantity }));
+    dispatch(fetchOrderAsync(userId));
   };
 
   const handleDelete = async () => {
@@ -139,7 +142,6 @@ const Review = () => {
                                   product.cart.quantity
                                 )
                               );
-                              await dispatch(fetchOrderAsync(userId));
                             }}
                           >
                             -

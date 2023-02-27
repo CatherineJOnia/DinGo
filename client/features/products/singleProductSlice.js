@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import socket from "../../app/socket";
 
-export const fetchSingleProduct = createAsyncThunk(
-  "fetchSingleProduct",
+export const fetchSingleProductAsync = createAsyncThunk(
+  "products/fetchSingleProduct",
   async (productId) => {
     try {
       const { data } = await axios.get(`/api/products/${productId}`);
@@ -14,7 +15,7 @@ export const fetchSingleProduct = createAsyncThunk(
 );
 
 export const editSingleProduct = createAsyncThunk(
-  "editSingleProduct",
+  "products/editSingleProduct",
   async ({ productId, name, description, quantity, price, imageUrl }) => {
     try {
       const { data } = await axios.put(`/api/products/${productId}`, {
@@ -24,6 +25,7 @@ export const editSingleProduct = createAsyncThunk(
         price,
         imageUrl,
       });
+      socket.emit("/product/edit", data);
       return data;
     } catch (err) {
       return "An error occurred in the editSingleProduct thunk!", err;
@@ -32,10 +34,11 @@ export const editSingleProduct = createAsyncThunk(
 );
 
 export const addSingleProduct = createAsyncThunk(
-  "addSingleProduct",
+  "products/addSingleProduct",
   async (productId) => {
     try {
       const { data } = await axios.post("/api/cart", { productId });
+      socket.emit("/product/create", data);
       return data;
     } catch (err) {
       console.log("An error occurred in the addSingleProduct thunk!", err);
@@ -48,7 +51,7 @@ const singleProductSlice = createSlice({
   initialState: {},
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchSingleProduct.fulfilled, (state, action) => {
+    builder.addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
       return action.payload;
     });
     builder.addCase(editSingleProduct.fulfilled, (state, action) => {
