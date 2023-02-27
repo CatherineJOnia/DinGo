@@ -95,15 +95,18 @@ export const cartSlice = createSlice({
   reducers: {
     increase: (state, action) => {
       const product = state.filter(
-        (product) => product.cart.id === action.payload.id
+        (product) => product.id === action.payload.id
       );
-      state.push(action.payload++);
+      product.quantity++;
     },
     decrease(state, action) {
       const product = state.filter(
         (product) => product.cart.id === action.payload.id
       );
-      state.cart.product.cart.quantity = action.payload--;
+      {
+        product ? action.payload-- : null;
+      }
+      return state;
     },
   },
   extraReducers: (builder) => {

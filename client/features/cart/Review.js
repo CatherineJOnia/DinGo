@@ -31,42 +31,28 @@ const Review = () => {
   const userId = useSelector((state) => state.auth.me.id);
 
   const cart = useSelector(selectCart);
-  const quantity = useSelector((state) => state.cart.quantity);
+  // let quantity = useSelector((state) => state.cart.quantity);
 
   const order = useSelector((state) => state.auth.me.orders);
 
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
-  // const [quantity, setQuantity] = useState(1);
-
-  // const handleIncrement = async () => {
-  //   console.log("productId", productId);
-  //   console.log("orderId", orderId);
-  //   console.log("quantity", quantity);
-  //   setQuantity(quantity++);
-  //   await dispatch(editCartAsync({ orderId, productId, quantity }));
-  // };
-
-  const increment = (product) => {
-    dispatch(increase(product));
+  const handleIncrement = async (orderId, productId, quantity) => {
+    setQuantity(quantity++);
+    await dispatch(editCartAsync({ orderId, productId, quantity }));
   };
 
-  const decrement = (product) => {
-    dispatch(decrease(product));
-  };
-
-  // const handleDecrement = async (orderId, productId, quantity) => {
-  //   setQuantity(quantity--);
-  //   await dispatch(editCartAsync({ orderId, productId, quantity }));
+  // const decrement = (product) => {
+  //   dispatch(decrease(product));
   // };
 
-  // console.log("me", me);
-  // console.log("order", order);
-  // console.log("productId", productId);
-  // console.log("orderId", orderId);
-  // console.log("cart", cart);
+  const handleDecrement = async (orderId, productId, quantity) => {
+    setQuantity(quantity--);
+    await dispatch(editCartAsync({ orderId, productId, quantity }));
+  };
 
   const handleDelete = async () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
@@ -99,7 +85,7 @@ const Review = () => {
     calculateSubtotal();
     calculateTax();
     calculateTotal();
-  }, [handleDelete]);
+  }, [handleIncrement, handleDecrement, handleDelete]);
 
   useEffect(() => {
     dispatch(fetchOrderAsync(userId));
@@ -126,12 +112,12 @@ const Review = () => {
                         aria-label="small outlined button group"
                       >
                         <Button
-                          onClick={() => {
-                            dispatch({
-                              type: "cart/increase",
-                              payload: product.cart.quantity,
-                            });
-                            dispatch(fetchOrderAsync(userId));
+                          onClick={async () => {
+                            handleIncrement(
+                              product.cart.orderId,
+                              product.cart.productId,
+                              product.cart.quantity
+                            );
                           }}
                         >
                           +
@@ -145,9 +131,15 @@ const Review = () => {
 
                         {
                           <Button
-                            onClick={() => {
-                              dispatch(decrement(product.cart.quantity));
-                              dispatch(fetchOrderAsync(userId));
+                            onClick={async () => {
+                              dispatch(
+                                handleDecrement(
+                                  product.cart.orderId,
+                                  product.cart.productId,
+                                  product.cart.quantity
+                                )
+                              );
+                              await dispatch(fetchOrderAsync(userId));
                             }}
                           >
                             -
