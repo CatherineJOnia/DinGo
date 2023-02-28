@@ -36,6 +36,7 @@ const Review = () => {
 
   const order = useSelector((state) => state.auth.me.orders);
 
+  const [productTotal, setProductTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -47,10 +48,6 @@ const Review = () => {
     dispatch(fetchOrderAsync(userId));
   };
 
-  // const decrement = (product) => {
-  //   dispatch(decrease(product));
-  // };
-
   const handleDecrement = async (orderId, productId, quantity) => {
     setQuantity(quantity--);
     await dispatch(editCartAsync({ orderId, productId, quantity }));
@@ -60,6 +57,13 @@ const Review = () => {
   const handleDelete = async () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
+
+  // const calculateProductTotal = async (product) => {
+  //   var productTotal = 0;
+  //   productTotal += Number(product.price) * product.quantity;
+  //   setProductTotal(productTotal);
+  //   await dispatch(fetchOrderAsync(userId));
+  // };
 
   const calculateSubtotal = () => {
     var total = 0;
@@ -85,12 +89,14 @@ const Review = () => {
   };
 
   useEffect(() => {
+    // calculateProductTotal(product);
     calculateSubtotal();
     calculateTax();
     calculateTotal();
   }, [handleIncrement, handleDecrement, handleDelete]);
 
   useEffect(() => {
+    // calculateProductTotal(product);
     dispatch(fetchOrderAsync(userId));
   }, [dispatch]);
 
@@ -101,7 +107,7 @@ const Review = () => {
       ) : (
         <React.Fragment>
           <Typography variant="h6" gutterBottom>
-            Order summary
+            Order Summary
           </Typography>
           <List disablePadding>
             {cart.map((product, index) => {
@@ -162,9 +168,7 @@ const Review = () => {
                       </ButtonGroup>
                     }
                   />
-                  <Typography variant="body2">
-                    ${product.cart ? product.cart.totalPrice : "Free"}
-                  </Typography>
+                  <Typography variant="body2">${product.price}</Typography>
                 </ListItem>
               );
             })}
