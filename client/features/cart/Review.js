@@ -58,11 +58,14 @@ const Review = () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
 
-  // const calculateProductTotal = async (product) => {
-  //   var productTotal = 0;
-  //   productTotal += Number(product.price) * product.quantity;
-  //   setProductTotal(productTotal);
-  //   await dispatch(fetchOrderAsync(userId));
+  // const calculateProductTotal = (productId) => {
+  //   for (var product of cart) {
+  //
+  //     // productTotal = Number(product.price) * product.cart.quantity;
+  //     console.log("product", product);
+  //     console.log("cart[product].id", cart[product].id);
+  //     setProductTotal(productTotal);
+  //   }
   // };
 
   const calculateSubtotal = () => {
@@ -89,14 +92,14 @@ const Review = () => {
   };
 
   useEffect(() => {
-    // calculateProductTotal(product);
+    // calculateProductTotal();
     calculateSubtotal();
     calculateTax();
     calculateTotal();
   }, [handleIncrement, handleDecrement, handleDelete]);
 
   useEffect(() => {
-    // calculateProductTotal(product);
+    // calculateProductTotal();
     dispatch(fetchOrderAsync(userId));
   }, [dispatch]);
 

@@ -15,7 +15,6 @@ const EditProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [inventoryQty, setInventoryQty] = useState("");
-  // const [imageUrl, setImageUrl] = useState("");
 
   const nameHandler = (event) => {
     setName(event.target.value);
@@ -29,10 +28,6 @@ const EditProduct = () => {
     setDescription(event.target.value);
   };
 
-  // const imageHandler = (event) => {
-  //   setImageUrl(event.target.value);
-  // };
-
   const quantityHandler = (event) => {
     setInventoryQty(event.target.value);
   };
@@ -45,14 +40,12 @@ const EditProduct = () => {
         name,
         price,
         description,
-        // imageUrl,
         inventoryQty,
       })
     );
     setName("");
     setPrice("");
     setDescription("");
-    // setImageUrl("");
     setInventoryQty("");
   };
 
