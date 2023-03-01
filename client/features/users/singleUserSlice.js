@@ -17,9 +17,7 @@ export const editSingleUserAsync = createAsyncThunk(
   "/users/:userId/edit",
   async ({ userId, isAdmin }) => {
     try {
-      const { data } = await axios.put(`/api/users/${userId}`, {
-        isAdmin,
-      });
+      const { data } = await axios.put(`/api/users/${userId}`, { isAdmin });
       return data;
     } catch (err) {
       return "An error occurred in the editSingleUser thunk!", err;
