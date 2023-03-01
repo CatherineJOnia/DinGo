@@ -5,8 +5,8 @@ import {
   fetchUsersAsync,
   selectUsers,
   deleteSingleUserAsync,
+  editSingleUserAsync,
 } from "./usersSlice";
-import { editSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid, useGridApiRef, useGridLogger } from "@mui/x-data-grid";
@@ -31,20 +31,18 @@ const UserData = () => {
   const dispatch = useDispatch();
 
   const users = useSelector(selectUsers);
-  const userId = users.id;
-  // const isAdmin = useSelector((state) => state.users.isAdmin);
-
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(true);
 
   const handleDelete = async (userId) => {
     await dispatch(deleteSingleUserAsync({ userId }));
   };
 
   const handleEdit = async (userId) => {
-    console.log("userId userId", userId);
     userId && isAdmin === false ? setIsAdmin(true) : null;
-    userId && isAdmin === true ? alert("User is already an Admin!") : null;
+
+    userId && isAdmin === true ? setIsAdmin(false) : null;
     await dispatch(editSingleUserAsync({ userId, isAdmin }));
+    await dispatch(fetchUsersAsync());
   };
 
   useEffect(() => {
@@ -63,14 +61,13 @@ const UserData = () => {
       headerName: "",
       width: 180,
       renderCell: (users) => {
-        // console.log("users.id", users.id);
         return (
           <Button
             variant="outlined"
             size="small"
-            onClick={async (evt) => {
+            onClick={(evt) => {
               evt.preventDefault();
-              await dispatch(handleEdit(users.id, users.isAdmin));
+              dispatch(handleEdit(users.id, users.isAdmin));
             }}
           >
             Edit Admin Status
@@ -89,7 +86,7 @@ const UserData = () => {
             aria-label="delete"
             onClick={async (evt) => {
               evt.preventDefault();
-              await dispatch(handleDelete(users.id));
+              dispatch(handleDelete(users.id));
             }}
           >
             <DeleteIcon />
