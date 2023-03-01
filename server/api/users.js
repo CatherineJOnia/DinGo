@@ -44,12 +44,13 @@ router.put("/:userId", async (req, res, next) => {
 
 router.delete("/:userId", async (req, res, next) => {
   try {
-    await User.destroy({
-      where: {
-        id: req.params.userId,
-      },
-    });
-    res.json(req.params.userId);
+    const deletedUser = await User.findByPk(req.params.userId);
+    if (deletedUser) {
+      await deletedUser.destroy();
+      res.json(deletedUser);
+    } else {
+      console.log("nothing to be deleted");
+    }
   } catch (error) {
     next(error);
   }

@@ -27,21 +27,21 @@ export const editSingleUserAsync = createAsyncThunk(
   }
 );
 
-export const deleteSingleUserAsync = createAsyncThunk(
-  "/users/:userId/delete",
-  async ({ userId }) => {
-    try {
-      const { data } = await axios.delete(`/api/users/${userId}`);
-      return data;
-    } catch (err) {
-      return "An error occurred in the deleteSingleUser thunk!", err;
-    }
-  }
-);
+// export const deleteSingleUserAsync = createAsyncThunk(
+//   "/users/:userId/delete",
+//   async ({ userId }) => {
+//     try {
+//       const { data } = await axios.delete(`/api/users/${userId}`);
+//       return data;
+//     } catch (err) {
+//       return "An error occurred in the deleteSingleUser thunk!", err;
+//     }
+//   }
+// );
 
 const singleUserSlice = createSlice({
   name: "user",
-  initialState: [],
+  initialState: {},
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchSingleUserAsync.fulfilled, (state, action) => {
@@ -50,9 +50,9 @@ const singleUserSlice = createSlice({
     builder.addCase(editSingleUserAsync.fulfilled, (state, action) => {
       return action.payload;
     });
-    builder.addCase(deleteSingleUserAsync.fulfilled, (state, action) => {
-      return state.filter((product) => product.id !== action.payload.id);
-    });
+    // builder.addCase(deleteSingleUserAsync.fulfilled, (state, action) => {
+    //   return state.filter((user) => user.id !== action.payload.id);
+    // });
   },
 });
 
