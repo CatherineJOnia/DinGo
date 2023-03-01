@@ -9,9 +9,10 @@ export const fetchUsersAsync = createAsyncThunk("users/fetchAll", async () => {
     console.log("An error occurred in the fetchUsers thunk!", err);
   }
 });
+
 export const usersSlice = createSlice({
   name: "users",
-  initialState: {},
+  initialState: [],
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {

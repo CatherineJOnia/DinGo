@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { fetchUsersAsync, selectUsers } from "./usersSlice";
 import { editSingleUserAsync, deleteSingleUserAsync } from "./singleUserSlice";
 
@@ -24,6 +25,7 @@ const theme = createTheme({
 
 const UserData = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const users = useSelector(selectUsers);
 
   useEffect(() => {

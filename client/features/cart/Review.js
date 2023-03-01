@@ -58,12 +58,11 @@ const Review = () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
 
-  // const calculateProductTotal = (productId) => {
-  //   for (var product of cart) {
-  //
-  //     // productTotal = Number(product.price) * product.cart.quantity;
+  // const calculateProductTotal = () => {
+  //   var productTotal = 0;
+  //   for (var product in cart) {
+  //     productTotal = product.price * product.quantity;
   //     console.log("product", product);
-  //     console.log("cart[product].id", cart[product].id);
   //     setProductTotal(productTotal);
   //   }
   // };
