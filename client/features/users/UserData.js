@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchUsersAsync, selectUsers } from "./usersSlice";
-import { editSingleUserAsync, deleteSingleUserAsync } from "./singleUserSlice";
+import {
+  fetchUsersAsync,
+  selectUsers,
+  deleteSingleUserAsync,
+} from "./usersSlice";
+import { editSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid } from "@mui/x-data-grid";
@@ -27,6 +31,11 @@ const UserData = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const users = useSelector(selectUsers);
+  const userId = users.id;
+
+  const handleDelete = async (userId) => {
+    await dispatch(deleteSingleUserAsync({ userId }));
+  };
 
   useEffect(() => {
     dispatch(fetchUsersAsync());
@@ -63,14 +72,15 @@ const UserData = () => {
       field: "col7",
       headerName: "",
       width: 80,
-      renderCell: (userId) => {
+      renderCell: (users) => {
+        console.log("userId", userId);
         return (
           <IconButton
             aria-label="delete"
             onClick={async (evt) => {
               evt.preventDefault();
-              await dispatch(deleteSingleUserAsync(userId.value));
-              // alert("Delete user " + userId.value);
+              await dispatch(handleDelete(users.id));
+              alert("Delete user " + users.id);
             }}
           >
             <DeleteIcon />

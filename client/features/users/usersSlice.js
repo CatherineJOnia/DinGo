@@ -10,6 +10,19 @@ export const fetchUsersAsync = createAsyncThunk("users/fetchAll", async () => {
   }
 });
 
+export const deleteSingleUserAsync = createAsyncThunk(
+  "/users/:userId/delete",
+  async ({ userId }) => {
+    try {
+      console.log("userId", userId);
+      const { data } = await axios.delete(`/api/users/${userId}`);
+      return data;
+    } catch (err) {
+      return "An error occurred in the deleteSingleUser thunk!", err;
+    }
+  }
+);
+
 export const usersSlice = createSlice({
   name: "users",
   initialState: [],
@@ -17,6 +30,9 @@ export const usersSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchUsersAsync.fulfilled, (state, action) => {
       return action.payload;
+    });
+    builder.addCase(deleteSingleUserAsync.fulfilled, (state, action) => {
+      return state.filter((user) => user.id !== action.payload.id);
     });
   },
 });
