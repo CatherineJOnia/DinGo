@@ -17,6 +17,7 @@ export const editSingleUserAsync = createAsyncThunk(
   "/users/:userId/edit",
   async ({ userId, isAdmin }) => {
     try {
+      console.log("userId, isAdmin", userId, isAdmin);
       const { data } = await axios.put(`/api/users/${userId}`, { isAdmin });
       return data;
     } catch (err) {

@@ -9,7 +9,7 @@ import {
 import { editSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, useGridApiRef, useGridLogger } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Button } from "@mui/material";
 
@@ -41,7 +41,9 @@ const UserData = () => {
   };
 
   const handleEdit = async (userId) => {
-    isAdmin ? setIsAdmin(true) : setIsAdmin(true);
+    console.log("userId userId", userId);
+    userId && isAdmin === false ? setIsAdmin(true) : null;
+    userId && isAdmin === true ? alert("User is already an Admin!") : null;
     await dispatch(editSingleUserAsync({ userId, isAdmin }));
   };
 
@@ -61,13 +63,14 @@ const UserData = () => {
       headerName: "",
       width: 180,
       renderCell: (users) => {
+        // console.log("users.id", users.id);
         return (
           <Button
             variant="outlined"
             size="small"
             onClick={async (evt) => {
               evt.preventDefault();
-              await dispatch(handleEdit(users.id));
+              await dispatch(handleEdit(users.id, users.isAdmin));
             }}
           >
             Edit Admin Status
