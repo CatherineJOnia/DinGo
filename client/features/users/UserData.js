@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+
 import {
   fetchUsersAsync,
   selectUsers,
   deleteSingleUserAsync,
+  editSingleUserAsync,
 } from "./usersSlice";
-import { editSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, useGridApiRef, useGridLogger } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Button } from "@mui/material";
 
@@ -29,12 +29,20 @@ const theme = createTheme({
 
 const UserData = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const users = useSelector(selectUsers);
-  const userId = users.id;
+  const [isAdmin, setIsAdmin] = useState(true);
 
   const handleDelete = async (userId) => {
     await dispatch(deleteSingleUserAsync({ userId }));
+  };
+
+  const handleEdit = async (userId) => {
+    userId && isAdmin === false ? setIsAdmin(true) : null;
+
+    userId && isAdmin === true ? setIsAdmin(false) : null;
+    await dispatch(editSingleUserAsync({ userId, isAdmin }));
+    await dispatch(fetchUsersAsync());
   };
 
   useEffect(() => {
@@ -46,23 +54,23 @@ const UserData = () => {
     { field: "col2", headerName: "First Name", width: 150 },
     { field: "col3", headerName: "Last Name", width: 150 },
     { field: "col4", headerName: "Email", width: 200 },
-    { field: "col5", headerName: "Admin Status", width: 150 },
+    { field: "col5", headerName: "Admin Status", width: 120 },
 
     {
       field: "col6",
       headerName: "",
-      width: 100,
-      renderCell: (userId) => {
+      width: 180,
+      renderCell: (users) => {
         return (
           <Button
             variant="outlined"
             size="small"
-            onClick={async (evt) => {
+            onClick={(evt) => {
               evt.preventDefault();
-              await dispatch(editSingleUserAsync(userId));
+              dispatch(handleEdit(users.id, users.isAdmin));
             }}
           >
-            Edit User
+            Edit Admin Status
           </Button>
         );
       },
@@ -73,14 +81,12 @@ const UserData = () => {
       headerName: "",
       width: 80,
       renderCell: (users) => {
-        console.log("userId", userId);
         return (
           <IconButton
             aria-label="delete"
             onClick={async (evt) => {
               evt.preventDefault();
-              await dispatch(handleDelete(users.id));
-              alert("Delete user " + users.id);
+              dispatch(handleDelete(users.id));
             }}
           >
             <DeleteIcon />
