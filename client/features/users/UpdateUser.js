@@ -13,9 +13,10 @@ const UpdateUser = () => {
   }, [dispatch]);
 
   const handleAdmin = (evt) => {
+    evt.preventDefault();
     setAdmin(evt.target.value);
   };
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     await dispatch(editSingleUser({ userId, isAdmin }));
   };
@@ -31,7 +32,7 @@ const UpdateUser = () => {
             Customer
           </option>
         </select>
-        <button type="submit">Update admin</button>
+        <button type="submit">Update Admin</button>
       </form>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { authenticate } from "./authSlice";
+import { authenticate, authenticateSignup } from "./authSlice";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -52,7 +52,7 @@ const AuthForm = ({ name, displayName }) => {
     const lastName = evt.target.lastName.value;
 
     dispatch(
-      authenticate({
+      authenticateSignup({
         email,
         password,
         firstName,

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-// import { logout } from "../../app/store";
 
+import { selectCart } from "./cart/cartSlice";
+import { logout } from "../app/store";
+
+import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 
@@ -15,7 +18,7 @@ const Navbar = () => {
 
   const logout = () => {
     dispatch(logout());
-    navigate("/login");
+    dispatch(navigate("/login"));
   };
 
   return (
