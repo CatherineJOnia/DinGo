@@ -65,8 +65,8 @@ const AllProducts = () => {
           alignItems="center"
           direction="row"
         >
-          {products && products.length
-            ? products.map((product) => {
+          {productsPerPage && productsPerPage.length
+            ? productsPerPage.map((product) => {
                 return (
                   <Grid
                     className="all-prod-card-cont"
@@ -88,7 +88,6 @@ const AllProducts = () => {
               })
             : null}
         </Grid>
-        {/* //Pagination */}
         <Stack className="all-prod-page-nums" spacing={2}>
           <Pagination
             count={paginate(products).length}
