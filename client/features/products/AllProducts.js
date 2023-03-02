@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import ProductCarousel from "./ProductCarousel";
 import { fetchProductsAsync, productList } from "./productsSlice";
+import paginate from "./Paginate";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Pagination, Typography, Stack, Container, Grid } from "@mui/material";
@@ -12,6 +13,29 @@ const AllProducts = () => {
   const dispatch = useDispatch();
   const products = useSelector(productList);
   const isAdmin = useSelector((state) => state.auth.me.isAdmin);
+
+  const [page, setPage] = useState(
+    localStorage.getItem("currentPage")
+      ? Number(localStorage.getItem("currentPage"))
+      : 1
+  );
+  const [productsPerPage, setProductsPerPage] = useState([]);
+
+  const handlePageChange = (event, value) => {
+    localStorage.setItem("currentPage", value - 1);
+    setPage(value - 1);
+  };
+
+  useEffect(() => {
+    if (products.length > 0) {
+      if (page > Math.ceil(products.length / 9) - 1) {
+        localStorage.setItem("currentPage", page - 1);
+        setPage((prev) => prev - 1);
+      } else {
+        setProductsPerPage(paginate(products)[page]);
+      }
+    }
+  }, [products, page]);
 
   useEffect(() => {
     dispatch(fetchProductsAsync());
@@ -65,13 +89,13 @@ const AllProducts = () => {
             : null}
         </Grid>
         {/* //Pagination */}
-        {/* <Stack className="all-prod-page-nums" spacing={2}>
+        <Stack className="all-prod-page-nums" spacing={2}>
           <Pagination
-            count={numPages}
-            page={this.state.page}
-            onChange={handleChange}
+            count={paginate(products).length}
+            page={page + 1}
+            onChange={handlePageChange}
           />
-        </Stack> */}
+        </Stack>
       </Container>
     </div>
   );
