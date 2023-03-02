@@ -29,7 +29,6 @@ const Review = () => {
   const cart = useSelector(selectCart);
   const order = useSelector((state) => state.auth.me.orders);
 
-  const [productTotal, setProductTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -50,15 +49,6 @@ const Review = () => {
   const handleDelete = async () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
-
-  // const calculateProductTotal = () => {
-  //   var productTotal = 0;
-  //   for (var product in cart) {
-  //     productTotal = product.price * product.quantity;
-  //     console.log("product", product);
-  //     setProductTotal(productTotal);
-  //   }
-  // };
 
   const calculateSubtotal = () => {
     var total = 0;
@@ -84,14 +74,12 @@ const Review = () => {
   };
 
   useEffect(() => {
-    // calculateProductTotal();
     calculateSubtotal();
     calculateTax();
     calculateTotal();
   }, [handleIncrement, handleDecrement, handleDelete]);
 
   useEffect(() => {
-    // calculateProductTotal();
     dispatch(fetchOrderAsync(userId));
   }, [dispatch]);
 

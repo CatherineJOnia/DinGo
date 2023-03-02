@@ -24,75 +24,14 @@ const GuestCart = () => {
 
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
 
-  const [subtotal, setSubtotal] = useState(0);
-  const [tax, setTax] = useState(0);
-  const [orderTotal, setOrderTotal] = useState(0);
-  const [quantity, setQuantity] = useState(1);
-
-  const editItem2 = (itemID, amount) => {
-    let cartCopy = [...cart];
-    //find if item exists, just in case
-    let existingItem = cartCopy.find((item) => item.productId === itemID);
-    //if it doesn't exist simply return
-    if (!existingItem) return;
-    //continue and update quantity
-    existingItem.quantity += amount;
-    //validate result
-    if (existingItem.quantiy <= 0) {
-      // remove item by filtering it from cart array
-      cartCopy = cartCopy.filter((item) => item.productId !== itemID);
-    }
-    // update state and local state
-    setCart(cartCopy);
-    let stringCart = JSON.stringify(cartCopy);
-    localStorage.setItem("cart", stringCart);
-  };
-
-  const editItem = (itemId, amount) => {
-    if (!localStorage.getItem) {
-      localStorage.setItem("cart", JSON.stringify([]));
-    } else {
-      let cart = JSON.parse(localStorage.getItem("cart"));
-
-      const existingItem = cartArray.find((item) => item.id === newItem.id);
-      if (!existingItem) return;
-      existingItem.quantity += amount;
-      if (existingItem.quantity <= 0)
-        console.log("newItem.quantity", newItem.quantity);
-    }
-  };
-
-  const total = cart.reduce((subtotal, product) => {
+  const subtotal = cart.reduce((subtotal, product) => {
     subtotal += product.price * product.quantity;
     return subtotal;
   }, 0);
 
-  const calculateSubtotal = () => {
-    var total = 0;
-    for (var product of cart) {
-      product.cart ? (total += Number(product.price) * product.quantity) : null;
-    }
-    setSubtotal(total);
-  };
+  const tax = (Number(subtotal) * 0.07).toFixed(2);
 
-  const calculateTax = () => {
-    var tax = 0;
-    tax += Number(subtotal) * 0.07;
-    setTax((Math.round(tax * 100) / 100).toFixed(2));
-  };
-
-  const calculateTotal = () => {
-    var total = 0;
-    total += Number(subtotal);
-    total += Number(tax);
-    setOrderTotal((Math.round(total * 100) / 100).toFixed(2));
-  };
-
-  // useEffect(() => {
-  //   calculateSubtotal();
-  //   calculateTax();
-  //   calculateTotal();
-  // }, [dispatch]);
+  const total = (Number(subtotal) + Number(tax)).toFixed(2);
 
   useEffect(() => {
     if (cart) setCart(cart);
@@ -105,9 +44,6 @@ const GuestCart = () => {
 
   return (
     <div className="cartReviewDiv">
-      {/* {cart && cart.length === 0 ? (
-            "Your cart is empty. Check out our Products page to find your perfect DinGo!"
-          ) : ( */}
       <React.Fragment>
         <Typography variant="h6" gutterBottom>
           Order summary
@@ -209,7 +145,6 @@ const GuestCart = () => {
         </List>
         <hr />
       </React.Fragment>
-      {/* )} */}
     </div>
   );
 };
