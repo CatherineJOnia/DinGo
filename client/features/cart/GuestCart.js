@@ -181,11 +181,12 @@ const GuestCart = () => {
                             onClick={() => {
                               window.localStorage.removeItem("cart");
                               let cartState = cart.filter((cartItem) => {
-                                return cartItem.productId !== product.productId;
+                                return cartItem.id !== product.id;
                               });
                               let newCart = JSON.stringify(cartState);
                               window.localStorage.setItem("cart", newCart);
                               setCart(cartState);
+                              dispatch(navigate("/cart"));
                             }}
                           >
                             Delete
