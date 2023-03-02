@@ -18,11 +18,21 @@ const SingleProduct = () => {
   const navigate = useNavigate();
   const product = useSelector(selectSingleProduct);
   const { productId } = useParams();
-
-  // const isAdmin = useSelector((state) => state.auth.me.isAdmin);
-
+  const isAdmin = useSelector((state) => state.auth.me.isAdmin);
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const user = useSelector((state) => state.auth.me);
   const userId = user.id;
+
+  const handleAddToCart2 = () => {
+    if (!localStorage.getItem("cart")) {
+      localStorage.setItem("cart", JSON.stringify([product]));
+    } else {
+      let cart = localStorage.getItem("cart");
+      let cartArray = JSON.parse(cart);
+      let newItem = { ...product, quantity: 1 };
+      localStorage.setItem("cart", JSON.stringify([...cartArray, newItem]));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId));
@@ -31,28 +41,28 @@ const SingleProduct = () => {
   return (
     <div>
       <main>
-        {/* {isAdmin ? ( */}
-        <div className="adminBar">
-          <h5>Admin Control</h5>
+        {isAdmin ? (
           <div className="adminBar">
-            <Link to={`/products/${productId}/edit`}>
-              <button className="adminButton">
-                <EditIcon fontSize="12" /> Edit
+            <h5>Admin Control</h5>
+            <div className="adminBar">
+              <Link to={`/products/${productId}/edit`}>
+                <button className="adminButton">
+                  <EditIcon fontSize="12" /> Edit
+                </button>
+              </Link>
+              <button
+                className="adminButton"
+                onClick={async (evt) => {
+                  evt.preventDefault();
+                  await dispatch(deleteProductAsync({ productId }));
+                  dispatch(navigate("/products"));
+                }}
+              >
+                <DeleteIcon fontSize="12" /> Delete
               </button>
-            </Link>
-            <button
-              className="adminButton"
-              onClick={async (evt) => {
-                evt.preventDefault();
-                await dispatch(deleteProductAsync({ productId }));
-                dispatch(navigate("/products"));
-              }}
-            >
-              <DeleteIcon fontSize="12" /> Delete
-            </button>
+            </div>
           </div>
-        </div>
-        {/* ) : null} */}
+        ) : null}
         <div className="singleView">
           <div>
             <div className="back">
@@ -73,7 +83,9 @@ const SingleProduct = () => {
             <button
               onClick={async (evt) => {
                 evt.preventDefault();
-                await dispatch(addToCartAsync({ userId, productId }));
+                isLoggedIn
+                  ? await dispatch(addToCartAsync({ userId, productId }))
+                  : handleAddToCart2();
               }}
             >
               <ShoppingCartIcon fontSize="25" /> Add To Cart

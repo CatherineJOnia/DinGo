@@ -23,16 +23,16 @@ const AllProducts = () => {
 
   return (
     <div>
-      {/* {isAdmin ? ( */}
-      <div className="adminBar">
-        <h5>Admin Control</h5>
-        <Link to={"/addproduct"}>
-          <button className="adminButton">
-            <AddCircleIcon fontSize="12" /> Add a Product
-          </button>
-        </Link>
-      </div>
-      {/* ) : null } */}
+      {isAdmin ? (
+        <div className="adminBar">
+          <h5>Admin Control</h5>
+          <Link to={"/addproduct"}>
+            <button className="adminButton">
+              <AddCircleIcon fontSize="12" /> Add a Product
+            </button>
+          </Link>
+        </div>
+      ) : null}
       <ProductCarousel />
       <Container maxWidth="md" className="product-container">
         <div className="all-prod-body">

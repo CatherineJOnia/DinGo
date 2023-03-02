@@ -11,8 +11,6 @@ import {
   decrease,
 } from "./cartSlice";
 
-import { selectSingleProduct } from "../products/singleProductSlice";
-
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
@@ -25,18 +23,12 @@ import { CardTravelOutlined, CardTravelSharp } from "@mui/icons-material";
 
 const Review = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const me = useSelector((state) => state.auth.me);
   const userId = useSelector((state) => state.auth.me.id);
-
   const cart = useSelector(selectCart);
-  const product = useSelector((state) => state.cart.product);
-  // let quantity = useSelector((state) => state.cart.quantity);
-
   const order = useSelector((state) => state.auth.me.orders);
 
-  const [productTotal, setProductTotal] = useState(0);
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -57,15 +49,6 @@ const Review = () => {
   const handleDelete = async () => {
     await dispatch(deleteFromCartAsync(order.orderId, order.productId));
   };
-
-  // const calculateProductTotal = () => {
-  //   var productTotal = 0;
-  //   for (var product in cart) {
-  //     productTotal = product.price * product.quantity;
-  //     console.log("product", product);
-  //     setProductTotal(productTotal);
-  //   }
-  // };
 
   const calculateSubtotal = () => {
     var total = 0;
@@ -91,14 +74,12 @@ const Review = () => {
   };
 
   useEffect(() => {
-    // calculateProductTotal();
     calculateSubtotal();
     calculateTax();
     calculateTotal();
   }, [handleIncrement, handleDecrement, handleDelete]);
 
   useEffect(() => {
-    // calculateProductTotal();
     dispatch(fetchOrderAsync(userId));
   }, [dispatch]);
 
@@ -115,62 +96,57 @@ const Review = () => {
             {cart.map((product, index) => {
               return (
                 <ListItem key={index} sx={{ py: 1, px: 0 }}>
-                  <ListItemText
-                    primary={product ? product.name : null}
-                    secondary={
-                      <ButtonGroup
-                        size="small"
-                        aria-label="small outlined button group"
-                      >
-                        <Button
-                          onClick={async () => {
-                            handleIncrement(
+                  <ListItemText primary={product ? product.name : null} />
+                  <ButtonGroup
+                    size="small"
+                    aria-label="small outlined button group"
+                  >
+                    <Button
+                      onClick={async () => {
+                        handleIncrement(
+                          product.cart.orderId,
+                          product.cart.productId,
+                          product.cart.quantity
+                        );
+                      }}
+                    >
+                      +
+                    </Button>
+
+                    {
+                      <Button disabled>
+                        {product.cart ? product.cart.quantity : "1"}
+                      </Button>
+                    }
+
+                    {
+                      <Button
+                        onClick={async () => {
+                          dispatch(
+                            handleDecrement(
                               product.cart.orderId,
                               product.cart.productId,
                               product.cart.quantity
-                            );
-                          }}
-                        >
-                          +
-                        </Button>
-
-                        {
-                          <Button disabled>
-                            {product.cart ? product.cart.quantity : "1"}
-                          </Button>
-                        }
-
-                        {
-                          <Button
-                            onClick={async () => {
-                              dispatch(
-                                handleDecrement(
-                                  product.cart.orderId,
-                                  product.cart.productId,
-                                  product.cart.quantity
-                                )
-                              );
-                            }}
-                          >
-                            -
-                          </Button>
-                        }
-
-                        <Button
-                          onClick={async (evt) => {
-                            evt.preventDefault();
-                            await dispatch(
-                              deleteFromCartAsync(product.cart.productId)
-                            );
-                            dispatch(fetchOrderAsync(userId));
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </ButtonGroup>
+                            )
+                          );
+                        }}
+                      >
+                        -
+                      </Button>
                     }
-                  />
-                  <Typography variant="body2">${product.price}</Typography>
+
+                    <Button
+                      onClick={async (evt) => {
+                        evt.preventDefault();
+                        await dispatch(
+                          deleteFromCartAsync(product.cart.productId)
+                        );
+                        dispatch(fetchOrderAsync(userId));
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </ButtonGroup>
                 </ListItem>
               );
             })}
