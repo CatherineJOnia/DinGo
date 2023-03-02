@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { addProductAsync } from "../products/productsSlice";
-import { Link } from "react-router-dom";
 
 import { Container } from "@mui/material";
 

@@ -30,34 +30,6 @@ router.get("/:userId", async (req, res, next) => {
   }
 });
 
-router.put("/updateItemQuantity/:cartId/:productId", async (req, res, next) => {
-  try {
-    const cartId = req.params.cartId;
-    let productId = req.params.productId;
-    let quantity = req.body.quantity;
-    let product = await Product.findByPk(productId);
-    let matchingOrder = await Cart.findMatchingOrder(productId, cartId);
-
-    await matchingOrder.adjustItemOrder(product.price, quantity);
-    await matchingOrder.save();
-    res.send(matchingOrder);
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.get("/updateTotals/:cartId", async (req, res, next) => {
-  let cartId = req.params.cartId;
-  let cart = await Order.findByPk(cartId);
-  let cartContents = await Order.findCartContents(cartId);
-  let orderTotal = cart.findTotalPrice(
-    cartContents[0].dataValues.order_details
-  );
-  cartContents[0].dataValues.orderTotal = orderTotal;
-  cart.save();
-  res.send({ orderTotal });
-});
-
 router.put("/checkout/:userId", async (req, res, next) => {
   try {
     const userId = req.params.userId;
