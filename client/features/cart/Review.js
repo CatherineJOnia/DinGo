@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
+
 import {
   deleteFromCartAsync,
   fetchOrderAsync,
   editCartAsync,
-  updateItemQuantityAsync,
   selectCart,
-  increase,
-  decrease,
 } from "./cartSlice";
 
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Grid from "@mui/material/Grid";
-import { FormControl, InputLabel, NativeSelect } from "@mui/material";
-import { CardTravelOutlined, CardTravelSharp } from "@mui/icons-material";
+import {
+  Button,
+  ButtonGroup,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Grid,
+} from "@mui/material";
 
 const Review = () => {
   const dispatch = useDispatch();

@@ -11,12 +11,14 @@ import {
   decrease,
 } from "./cartSlice";
 
-import Typography from "@mui/material/Typography";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import {
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+  ButtonGroup,
+} from "@mui/material";
 
 const GuestCart = () => {
   const dispatch = useDispatch();
