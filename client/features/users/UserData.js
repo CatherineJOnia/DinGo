@@ -5,8 +5,8 @@ import {
   fetchUsersAsync,
   selectUsers,
   deleteSingleUserAsync,
-  editSingleUserAsync,
 } from "./usersSlice";
+import { editSingleUserAsync } from "./singleUserSlice";
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { DataGrid, useGridApiRef, useGridLogger } from "@mui/x-data-grid";

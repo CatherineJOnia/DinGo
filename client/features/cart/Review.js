@@ -11,8 +11,6 @@ import {
   decrease,
 } from "./cartSlice";
 
-import { selectSingleProduct } from "../products/singleProductSlice";
-
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Typography from "@mui/material/Typography";
@@ -25,15 +23,10 @@ import { CardTravelOutlined, CardTravelSharp } from "@mui/icons-material";
 
 const Review = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const me = useSelector((state) => state.auth.me);
   const userId = useSelector((state) => state.auth.me.id);
-
   const cart = useSelector(selectCart);
-  const product = useSelector((state) => state.cart.product);
-  // let quantity = useSelector((state) => state.cart.quantity);
-
   const order = useSelector((state) => state.auth.me.orders);
 
   const [productTotal, setProductTotal] = useState(0);
