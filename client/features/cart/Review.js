@@ -108,62 +108,57 @@ const Review = () => {
             {cart.map((product, index) => {
               return (
                 <ListItem key={index} sx={{ py: 1, px: 0 }}>
-                  <ListItemText
-                    primary={product ? product.name : null}
-                    secondary={
-                      <ButtonGroup
-                        size="small"
-                        aria-label="small outlined button group"
-                      >
-                        <Button
-                          onClick={async () => {
-                            handleIncrement(
+                  <ListItemText primary={product ? product.name : null} />
+                  <ButtonGroup
+                    size="small"
+                    aria-label="small outlined button group"
+                  >
+                    <Button
+                      onClick={async () => {
+                        handleIncrement(
+                          product.cart.orderId,
+                          product.cart.productId,
+                          product.cart.quantity
+                        );
+                      }}
+                    >
+                      +
+                    </Button>
+
+                    {
+                      <Button disabled>
+                        {product.cart ? product.cart.quantity : "1"}
+                      </Button>
+                    }
+
+                    {
+                      <Button
+                        onClick={async () => {
+                          dispatch(
+                            handleDecrement(
                               product.cart.orderId,
                               product.cart.productId,
                               product.cart.quantity
-                            );
-                          }}
-                        >
-                          +
-                        </Button>
-
-                        {
-                          <Button disabled>
-                            {product.cart ? product.cart.quantity : "1"}
-                          </Button>
-                        }
-
-                        {
-                          <Button
-                            onClick={async () => {
-                              dispatch(
-                                handleDecrement(
-                                  product.cart.orderId,
-                                  product.cart.productId,
-                                  product.cart.quantity
-                                )
-                              );
-                            }}
-                          >
-                            -
-                          </Button>
-                        }
-
-                        <Button
-                          onClick={async (evt) => {
-                            evt.preventDefault();
-                            await dispatch(
-                              deleteFromCartAsync(product.cart.productId)
-                            );
-                            dispatch(fetchOrderAsync(userId));
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </ButtonGroup>
+                            )
+                          );
+                        }}
+                      >
+                        -
+                      </Button>
                     }
-                  />
-                  <Typography variant="body2">${product.price}</Typography>
+
+                    <Button
+                      onClick={async (evt) => {
+                        evt.preventDefault();
+                        await dispatch(
+                          deleteFromCartAsync(product.cart.productId)
+                        );
+                        dispatch(fetchOrderAsync(userId));
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </ButtonGroup>
                 </ListItem>
               );
             })}

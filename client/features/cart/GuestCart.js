@@ -23,8 +23,6 @@ const GuestCart = () => {
   const navigate = useNavigate();
 
   const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
-  console.log("cart", cart);
-  // const product = useState((state) = );
 
   const [subtotal, setSubtotal] = useState(0);
   const [tax, setTax] = useState(0);
@@ -64,24 +62,15 @@ const GuestCart = () => {
     }
   };
 
-  const removeItem = (item) => {
-    if (!localStorage.getItem) {
-      localStorage.setItem("cart", JSON.stringify([]));
-    } else {
-      let cart = JSON.parse(localStorage.getItem("cart"));
-      console.log("cart//:", cart);
-      let filteredCart = cart.filter((product) => product.id !== item.id);
-      setCart(filteredCart);
-      localStorage.setItem("cart", JSON.stringify([...filteredCart]));
-    }
-  };
+  const total = cart.reduce((subtotal, product) => {
+    subtotal += product.price * product.quantity;
+    return subtotal;
+  }, 0);
 
   const calculateSubtotal = () => {
     var total = 0;
     for (var product of cart) {
-      product.cart
-        ? (total += Number(product.price) * product.cart.quantity)
-        : null;
+      product.cart ? (total += Number(product.price) * product.quantity) : null;
     }
     setSubtotal(total);
   };
@@ -126,74 +115,67 @@ const GuestCart = () => {
         <List disablePadding>
           {cart && cart.length
             ? cart.map((product) => {
-                // console.log("product", product);
-                // console.log("cart", cart);
                 return (
                   <ListItem key={product.productId} sx={{ py: 1, px: 0 }}>
-                    <ListItemText
-                      primary={product.name}
-                      secondary={
-                        <ButtonGroup
-                          size="small"
-                          aria-label="small outlined button group"
-                        >
-                          <Button
-                            onClick={() => {
-                              if (product.quantity >= 1) {
-                                const _product = cart.filter((prod) => {
-                                  return +prod.productId === product.id;
-                                })[0];
-                                const index = cart.indexOf(_product);
-                                product.quantity++;
-                                cart[index] = _product;
-                                window.localStorage.cart = JSON.stringify(cart);
-                                setCart(cart);
-                                dispatch(navigate("/cart"));
-                              }
-                              return;
-                            }}
-                          >
-                            +
-                          </Button>
-
-                          {<Button disabled>{product.quantity}</Button>}
-
-                          {
-                            <Button
-                              onClick={() => {
-                                if (product.quantity === 1) {
-                                  product.quantity = 1;
-                                } else if (product.quantity > 1) {
-                                  product.quantity--;
-                                  window.localStorage.cart =
-                                    JSON.stringify(cart);
-                                  setCart(cart);
-                                  dispatch(navigate("/cart"));
-                                }
-                                return;
-                              }}
-                            >
-                              -
-                            </Button>
+                    <ListItemText primary={product.name} />
+                    <ButtonGroup
+                      size="small"
+                      aria-label="small outlined button group"
+                    >
+                      <Button
+                        onClick={() => {
+                          if (product.quantity >= 1) {
+                            const _product = cart.filter((prod) => {
+                              return +prod.productId === product.id;
+                            })[0];
+                            const index = cart.indexOf(_product);
+                            product.quantity++;
+                            cart[index] = _product;
+                            window.localStorage.cart = JSON.stringify(cart);
+                            setCart(cart);
+                            dispatch(navigate("/cart"));
                           }
+                          return;
+                        }}
+                      >
+                        +
+                      </Button>
 
-                          <Button
-                            onClick={() => {
-                              window.localStorage.removeItem("cart");
-                              let cartState = cart.filter((cartItem) => {
-                                return cartItem.id !== product.id;
-                              });
-                              let newCart = JSON.stringify(cartState);
-                              window.localStorage.setItem("cart", newCart);
-                              setCart(cartState);
+                      {<Button disabled>{product.quantity}</Button>}
+
+                      {
+                        <Button
+                          onClick={() => {
+                            if (product.quantity === 1) {
+                              product.quantity = 1;
+                            } else if (product.quantity > 1) {
+                              product.quantity--;
+                              window.localStorage.cart = JSON.stringify(cart);
+                              setCart(cart);
                               dispatch(navigate("/cart"));
-                            }}
-                          >
-                            Delete
-                          </Button>
-                        </ButtonGroup>
+                            }
+                            return;
+                          }}
+                        >
+                          -
+                        </Button>
                       }
-                    />
+
+                      <Button
+                        onClick={() => {
+                          window.localStorage.removeItem("cart");
+                          let cartState = cart.filter((cartItem) => {
+                            return cartItem.id !== product.id;
+                          });
+                          let newCart = JSON.stringify(cartState);
+                          window.localStorage.setItem("cart", newCart);
+                          setCart(cartState);
+                          dispatch(navigate("/cart"));
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </ButtonGroup>
                   </ListItem>
                 );
               })
@@ -221,7 +203,7 @@ const GuestCart = () => {
           <ListItem sx={{ py: 1, px: 0 }}>
             <ListItemText primary="Total" variant="h6" />
             <Typography variant="h6" sx={{ fontWeight: 700 }}>
-              ${orderTotal}
+              ${total}
             </Typography>
           </ListItem>
         </List>
