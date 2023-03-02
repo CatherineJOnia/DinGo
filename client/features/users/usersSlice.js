@@ -11,7 +11,7 @@ export const fetchUsersAsync = createAsyncThunk("users/fetchAll", async () => {
 });
 
 export const deleteSingleUserAsync = createAsyncThunk(
-  "/users/:userId/delete",
+  "users/deleteSingleUser",
   async ({ userId }) => {
     try {
       console.log("userId", userId);

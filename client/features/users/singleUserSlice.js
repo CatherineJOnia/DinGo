@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const fetchSingleUserAsync = createAsyncThunk(
-  "/users/:userId",
+  "users/fetchSingleUser",
   async (userId) => {
     try {
       const { data } = await axios.get(`/api/users/${userId}`);
@@ -14,7 +14,7 @@ export const fetchSingleUserAsync = createAsyncThunk(
 );
 
 export const editSingleUserAsync = createAsyncThunk(
-  "/users/:userId/edit",
+  "users/editSingleUser",
   async ({ userId, isAdmin }) => {
     try {
       console.log("userId, isAdmin", userId, isAdmin);

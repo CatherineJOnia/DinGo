@@ -3,11 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import ProductCarousel from "./ProductCarousel";
-import {
-  fetchProductsAsync,
-  deleteProductAsync,
-  productList,
-} from "./productsSlice";
+import { fetchProductsAsync, productList } from "./productsSlice";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Pagination, Typography, Stack, Container, Grid } from "@mui/material";

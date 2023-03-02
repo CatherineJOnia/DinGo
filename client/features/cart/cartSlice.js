@@ -53,6 +53,19 @@ export const editCartAsync = createAsyncThunk(
   }
 );
 
+export const deleteFromCartAsync = createAsyncThunk(
+  "cart/deleteFromCart",
+  async (productId) => {
+    try {
+      const { data } = await axios.delete(`/api/cart/${productId}`);
+      socket.emit("cart/deleteProduct", data);
+      return data;
+    } catch (err) {
+      console.log("An error occurred in the deleteFromCart thunk!", err);
+    }
+  }
+);
+
 export const checkoutCartAsync = createAsyncThunk(
   "cart/checkout",
   async (userId) => {
@@ -76,19 +89,6 @@ export const createOrderAsync = createAsyncThunk(
       return data;
     } catch (err) {
       console.log("An error occurred in the createOrer thunk!", err);
-    }
-  }
-);
-
-export const deleteFromCartAsync = createAsyncThunk(
-  "cart/deleteFromCart",
-  async (productId) => {
-    try {
-      const { data } = await axios.delete(`/api/cart/${productId}`);
-      socket.emit("cart/deleteProduct", data);
-      return data;
-    } catch (err) {
-      console.log("An error occurred in the deleteFromCart thunk!", err);
     }
   }
 );
@@ -118,8 +118,6 @@ export const cartSlice = createSlice({
     });
   },
 });
-
-export const { increase, decrease } = cartSlice.actions;
 
 export const selectCart = (state) => state.cart;
 
