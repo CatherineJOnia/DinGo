@@ -49,7 +49,7 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 
 ## Demo
 
-Insert gif or link to demo
+http://www.giphy.com/gifs/QmhX1EUZaaGzwBpqZH
 
 
 ## Run Locally
