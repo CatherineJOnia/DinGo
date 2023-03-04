@@ -211,7 +211,7 @@ const products = [
       "Crystal rice paper wraps thinly-cut shrimp, rice noodles, cucumber strips, and edible flowers.",
     size: "Small",
     featured: true,
-    inventory_quantity: 20,
+    inventoryQty: 20,
     imageUrl: "/images/bento13.png",
   },
   {
@@ -220,7 +220,7 @@ const products = [
     description:
       "Picky eaters at home? Enamour them with character-shaped egg and fish cakes with salmon roe and rice",
     size: "Small",
-    inventory_quantity: 30,
+    inventoryQty: 30,
     imageUrl: "/images/bento14.png",
   },
   {
@@ -230,7 +230,7 @@ const products = [
       "Perfectly-grilled salmon with a consistent crisp and char, accompanied with steamed vegetables and rice pilaf ",
     size: "Medium",
     featured: true,
-    inventory_quantity: 15,
+    inventoryQty: 15,
     imageUrl: "/images/bento15.png",
   },
   {
