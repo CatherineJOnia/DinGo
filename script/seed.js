@@ -328,7 +328,7 @@ const products = [
     imageUrl: "/images/bento25.png",
     featured: false,
     size: "Small",
-    inventoryWty: 24,
+    inventoryQty: 24,
   },
   {
     name: "Katsu Quad",
