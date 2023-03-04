@@ -45,11 +45,6 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 <img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original.svg" alt="html5" width="40" height="40"/> 
 </a> 
 </p>
-  
-
-## Experience DinGo! 
-
-https://dingo-onia.onrender.com
 
 ## Demo
 
@@ -58,6 +53,17 @@ https://dingo-onia.onrender.com
 ![Admin GIF](https://github.com/CatherineJOnia/DinGo/blob/main/public/gifs/Admin.gif)
 ![Cart GIF](https://github.com/CatherineJOnia/DinGo/blob/main/public/gifs/Cart.gif)
 
+  
+## Experience DinGo! 
+
+https://dingo-onia.onrender.com
+  
+Log in as an admin
+    
+```bash
+  cat@dingo.com
+  123cat
+```
 
 ## Run Locally
 
@@ -97,4 +103,5 @@ Log in as an admin
   cat@dingo.com
   123cat
 ```
+ 
   
