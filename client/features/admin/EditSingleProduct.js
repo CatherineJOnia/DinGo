@@ -60,7 +60,7 @@ const EditProduct = () => {
         />
       </div>
       <div className="left">
-        <h2 align="center">Edit Product {product.name}</h2>
+        <h2 align="center">Edit Product: {product.name}</h2>
         <form onSubmit={handleSubmit}>
           <label htmlFor="name" className="editFormLabel">
             Product Name
