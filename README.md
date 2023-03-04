@@ -13,10 +13,6 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 - Pagination
 
 
-## Deployment
-
-https://dingo-onia.onrender.com
-
 ## Tech Stack
 
 <p> 
@@ -49,7 +45,11 @@ https://dingo-onia.onrender.com
 <img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original.svg" alt="html5" width="40" height="40"/> 
 </a> 
 </p>
+  
 
+## Experience DinGo! 
+
+https://dingo-onia.onrender.com
 
 ## Demo
 
@@ -90,3 +90,11 @@ Start the server
 ```bash
   npm run start:dev
 ```
+  
+Log in as an admin
+  
+```bash
+  cat@dingo.com
+  123cat
+```
+  
