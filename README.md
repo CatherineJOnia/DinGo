@@ -42,7 +42,7 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 <img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="html5" width="40" height="40"/> 
 </a> 
 <a href="https://webpack.js.org/">
-<img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original.svg" alt="html5" width="40" height="40"/> 
+<img src="https://github.com/devicons/devicon/blob/master/icons/webpack/webpack-original.svg" alt="webpack" width="40" height="40"/> 
 </a> 
 </p>
 
@@ -96,6 +96,8 @@ Start the server
 ```bash
   npm run start:dev
 ```
+
+Access the project in your browser at [`localhost:3000`](http://localhost:3000)
   
 Log in as an admin
   
