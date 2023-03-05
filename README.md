@@ -70,7 +70,7 @@ Log in as an admin
 Clone the project
 
 ```bash
-  git clone https://github.com/CatherineJOnia/DinGo.git
+  git clone git@github.com:CatherineJOnia/DinGo.git
 ```
 
 Go to the project directory
