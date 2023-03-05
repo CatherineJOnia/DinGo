@@ -1,7 +1,7 @@
 {
   "name": "dingo",
   "version": "1.0.0",
-  "description": "A place to buy beautiful dinner on the go!",
+  "description": "A custom eCommerce website to buy beautiful dinner on the go!",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
