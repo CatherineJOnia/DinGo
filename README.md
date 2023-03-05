@@ -32,8 +32,12 @@ A custom e-Commerce website for a fictional company, DinGO -- for Dinner on the 
 <a href="https://redux.js.org">
 <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg" alt="redux" width="40" height="40"/>
 </a>
+<a href="https://expressjs.com/">
+<img src="https://github.com/CatherineJOnia/DinGo/blob/main/public/images/express.png" alt="express" width="40" height="40"/>
+</a>
 <a href="https://mui.com/">
 <img src="https://user-images.githubusercontent.com/48143100/163075600-bcf5197c-33fa-4d61-933f-1eb82cf4807f.png" alt="redux" width="40" height="40"/>
+</a>
 </a>
 <a href="https://www.w3schools.com/css/"> 
 <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="css3" width="40" height="40"/> 
