@@ -10,8 +10,6 @@ const Order = db.define("order", {
     type: Sequelize.BOOLEAN,
     defaultValue: false,
   },
-  datePlaced: Sequelize.DATEONLY,
-  dateShipped: Sequelize.DATEONLY,
 });
 
 Order.findCart = async function (userId) {
