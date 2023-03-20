@@ -8,10 +8,30 @@ import { logout } from "../app/store";
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import Dehaze from "@mui/icons-material/Dehaze";
+
+const navLinks = [
+  {
+    id: "products",
+    title: "Products",
+  },
+  {
+    id: "cart",
+    title: "Cart",
+  },
+  {
+    id: "login",
+    title: "Login",
+  },
+];
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [active, setActive] = useState("");
+  const [toggle, setToggle] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const isAdmin = useSelector((state) => state.auth.me.isAdmin);
@@ -25,20 +45,25 @@ const Navbar = () => {
     <nav className="full-navbar">
       <div className="mainNav">
         <Link to="/home">
-          <h1>DinGo</h1>
+          <h1 className="font-bold cursor-pointer flex ">DinGo</h1>
         </Link>
         <Link to="/products">Products</Link>
       </div>
-      <div className="sideNav">
+      <div className="sideNav list-none hidden sm:flex flex-row gap-10">
         {isLoggedIn ? (
           <div>
             <Link to="/cart">
               <ShoppingCartIcon fontSize="small" />
             </Link>
-            <Link to="#" onClick={logout}>
-              Log Out
-            </Link>
-            {isAdmin ? <Link to="/users">Users</Link> : ""}
+            <div className="dropdown">
+              <Dehaze fontSize="medium" />
+              <div className="dropdown-content">
+                {isAdmin ? <Link to="/users">Users</Link> : ""}
+                <Link to="#" onClick={logout}>
+                  Log Out
+                </Link>
+              </div>
+            </div>
           </div>
         ) : (
           <div>
@@ -46,7 +71,7 @@ const Navbar = () => {
               <ShoppingCartIcon fontSize="medium" />
             </Link>
             <div className="dropdown">
-              <AccountBoxIcon fontSize="medium" />
+              <Dehaze fontSize="medium" />
               <div className="dropdown-content">
                 <Link to="/login">Log In</Link>
                 <Link to="/signup">Sign Up</Link>
