@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { selectCart } from "./cart/cartSlice";
 import { logout } from "../app/store";
+// import DinGo from "../../public/images/DinGo.webp";
 
 import Badge from "@mui/material/Badge";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -42,12 +43,16 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="full-navbar">
-      <div className="mainNav">
+    <nav className="w-full">
+      <div className="flex object-contain">
         <Link to="/home">
-          <h1 className="font-bold cursor-pointer flex ">DinGo</h1>
+          <img
+            src="../../images/DinGo.png"
+            alt="logo"
+            width={200}
+            height={50}
+          />
         </Link>
-        <Link to="/products">Products</Link>
       </div>
       <div className="sideNav list-none hidden sm:flex flex-row gap-10">
         {isLoggedIn ? (
@@ -58,6 +63,7 @@ const Navbar = () => {
             <div className="dropdown">
               <Dehaze fontSize="medium" />
               <div className="dropdown-content">
+                <Link to="/products">Products</Link>
                 {isAdmin ? <Link to="/users">Users</Link> : ""}
                 <Link to="#" onClick={logout}>
                   Log Out
@@ -73,6 +79,7 @@ const Navbar = () => {
             <div className="dropdown">
               <Dehaze fontSize="medium" />
               <div className="dropdown-content">
+                <Link to="/products">Products</Link>
                 <Link to="/login">Log In</Link>
                 <Link to="/signup">Sign Up</Link>
               </div>
